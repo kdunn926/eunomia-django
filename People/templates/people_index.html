@@ -1,0 +1,10 @@
+{% if people_list %}
+    <ul>
+    {% for person in people_list %}
+        <li>{{ person.name }}, {{ person.state }}, {{ person.party }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No people are available.</p>
+{% endif %}
+
