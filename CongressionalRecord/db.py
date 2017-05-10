@@ -1,8 +1,9 @@
 from neo4j import contextmanager
+from neo4j import connection
 from re import escape
 from django.conf import settings
 
-manager = contextmanager.Neo4jDBConnectionManager(settings.NEO4J_RESOURCE_URI, 
+manager = contextmanager.Neo4jDBConnectionManager(settings.NEO4J_RESOURCE_URI,
                                                   settings.NEO4J_USERNAME,
                                                   settings.NEO4J_PASSWORD)
 
@@ -13,6 +14,14 @@ def getNode(id, label):
         with manager.read as r:
             for n in r.execute(q, label=label, id=id).fetchone():
                 return n
+    except IndexError:
+        return {}
+
+def getSingleNodeByLabel(label_string):
+    q = 'MATCH (n:%s) RETURN n' % label_string
+    try:
+        with manager.read as r:
+            return r.execute(q, label=label_string)
     except IndexError:
         return {}
 
@@ -47,19 +56,40 @@ def getPeople():
     q = """
         MATCH (p:Person)
         RETURN p.name, p.state, p.party
-        LIMIT 25
         """
     with manager.read as r:
         return [{'name': p[0], 'state': p[1], 'party': p[2]} for p in r.execute(q).fetchall()]
 
-def getMonologeById(id):
+def getState(name):
+    q = 'MATCH (p:Person) WHERE p.name =~"%s" RETURN p.state' % (name)
+    with manager.read as r:
+        return r.execute(q).fetchall()
+
+def getAllParties():
+    q = """
+        MATCH (p:Party)
+        RETURN p
+        """
+    with manager.read as r:
+        return r.execute(q).fetchall()
+
+def getParty(name):
+    q = 'MATCH (p:Person) WHERE p.name =~ "%s" RETURN p.party' % (name)
+    with manager.read as r:
+        return r.execute(q).fetchall()
+
+def getPartyMembers(name):
+    q = 'MATCH (n:Person) WHERE n.party = "%s" RETURN n.name, n.state' % (name)
+    with manager.read as r:
+        return [{'name': n[0], 'state': n[1]} for n in r.execute(q).fetchall()]
+
+def getMonologueById(id):
     q = """
         MATCH (n:Monologue {id: {id}})<-[r:`SPOKE`]-(person)
         RETURN n.text
         """
     with manager.read as r:
         return r.execute(q, id=id).fetchall()
-
 
 def getMonologuesFor(name):
     q = """
@@ -69,6 +99,10 @@ def getMonologuesFor(name):
     with manager.read as r:
         return r.execute(q, name=name).fetchall()
 
+def getCongressByName(name):
+    q = " MATCH (n:Person)-[r:`SPOKE`]->(monologue) WHERE n.name =~'%s' RETURN monologue.congressionalYear" % (name)
+    with manager.read as r:
+        return r.execute(q).fetchall()
 
 def getProperNounMentions(mentioner):
     q = """

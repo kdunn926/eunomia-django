@@ -9,13 +9,22 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'default_django_sqlite3.db',                      # Or path to database file if using sqlite3
-    }
+    #'default': {
+    #    'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+    #    'NAME': 'default_django_sqlite3.db',                      # Or path to database file if using sqlite3
+    #}
+#}
+
+    'default' : {
+        'HOST':'localhost',
+        'PORT':7474,
+        'ENDPOINT':'/db/data',
+        'USERNAME': 'neo4j',
+        'PASSWORD': 'dog'
+        }
 }
 
-NEO4J_RESOURCE_URI = "http://localhost:7474"
+NEO4J_RESOURCE_URI = "https://localhost:7474"
 NEO4J_USERNAME = "neo4j"
 NEO4J_PASSWORD = "dog"
 
@@ -123,7 +132,10 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'People'
+    'People',
+    'Party',
+    'Congress',
+    'Monologues'
     #'neo4django.graph_auth'
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',

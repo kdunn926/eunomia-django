@@ -1,0 +1,13 @@
+<h1>Members of {{ party }} ({{ party_abbreviation }})</h1>
+
+{% if member_list %}
+    <ul>
+    {% for person in member_list %}
+         <li><p>{{ person.name }} FROM {{person.state}}</p></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No people are available.</p>
+{% endif %}
+
+

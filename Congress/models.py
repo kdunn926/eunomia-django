@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 from django.db import models
@@ -17,19 +18,16 @@ class NodeHandle(models.Model):
     def node(self):
         return db.get_node(self.id, self.__class__.__name__)
 
-class Person(NodeHandle):
+class Congress(NodeHandle):
 
     def getAll(self):
-        people = db.getPeople()
-        return people
+        congress = db.getSingleNodeByLabel("Congress")
+        return congress
 
     def getSingle(self):
         pass
 
-    def getParty(self, name):
-        party = db.getParty(name)
-        return party
+    def getCongressSession(self, name):
+    	congress = db.getCongressByName(name)
+    	return congress
 
-    def getState(self, name):
-        state = db.getState(name)
-        return state

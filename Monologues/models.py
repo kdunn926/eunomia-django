@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 from django.db import models
@@ -17,19 +18,15 @@ class NodeHandle(models.Model):
     def node(self):
         return db.get_node(self.id, self.__class__.__name__)
 
-class Person(NodeHandle):
+class Monologue(NodeHandle):
 
-    def getAll(self):
-        people = db.getPeople()
-        return people
+    def getMonologuesFor(self, name):
+        ''' returns the ID for a given monologue '''
+        monolouges = db.getMonologuesFor(name)
+        return monolouges
 
-    def getSingle(self):
-        pass
+    def getMonologueById(self, id):
+        ''' returns the text for a given monologue '''
+        monologue_text = db.getMonologueById(id)
+        return monologue_text[0][0]
 
-    def getParty(self, name):
-        party = db.getParty(name)
-        return party
-
-    def getState(self, name):
-        state = db.getState(name)
-        return state
