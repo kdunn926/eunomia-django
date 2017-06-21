@@ -24,10 +24,23 @@ class Congress(NodeHandle):
         congress = db.getSingleNodeByLabel("Congress")
         return congress
 
-    def getSingle(self):
-        pass
+    #def getSingle(self):
+    #    pass
 
     def getCongressSession(self, name):
     	congress = db.getCongressByName(name)
     	return congress
 
+    def getDatesForCongressNumber(self, number):
+        query = """
+        MATCH (m:Monologue)-[r:`PART OF`]->(c:Congress {id:  'Congress %s'})
+        RETURN DISTINCT m.date ORDER BY m.date DESC
+        """ % number
+        tuple_dates = db.query(query)
+        # There is only 1 date returned for each tuple, so break apart tuple
+        dates = [date[0] for date in tuple_dates]
+        return dates
+
+#    def getMonloguesByDate(self, date):
+#        monoluges = db.getMonloguesByDate(date)
+#        return monoluges

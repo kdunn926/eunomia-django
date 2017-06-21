@@ -2,10 +2,22 @@
 
 <p>STATE: {{ State }}</p>
 
-<p>PARTY: {{ Party }}</p>
+<p>Member of the following Parties</p>
+{% for party in Party %}
+	<li><a href={% url 'Party:party_detail' party %}>{{party}}</a></li>
+{% endfor %}
 
-<p>Sessions: {{ Sessions }}</p>
+<p>Member of the following Congressional Session(s):</p>
+{% for session in Sessions %}
+	<li><a href={% url 'Congress:congress_dates' session %}>{{session}}</a></li>
+{% endfor %}
 
-{% for monologue in Monologues %}
-	<p>{{ monologue }}</p>
+<hr/>
+
+{% for monologue_text, monologue_id in Monologues %}
+	<p>{{ monologue_text }}</p>
+	<a href={% url 'Monologues:monologue_detail' monologue_id %}>More Details</a>
+	<hr/>
+
+
 {% endfor %}

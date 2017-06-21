@@ -1,0 +1,12 @@
+<h1>Details of {{ party }} ({{ party_abbreviation }})</h1>
+
+{% if parties %}
+    <ul>
+    {% for party in parties %}
+         <li><p>{{ party }}</p></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No details are available... available.</p>
+{% endif %}
+<a href={% url 'Party:party_members' party_abbreviation %}>Members of {{party}} Party</a>

@@ -6,6 +6,8 @@ from . import views
 urlpatterns = [
 
 	url(r'^$', views.index, name='people_index'),
+
+	# The .* regex below is bad -- lots of corner cases to consider when fixing
 	url(r'^(?P<name>.*)/$', views.person_detail, name='person_detail'),
 
 

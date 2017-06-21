@@ -8,6 +8,13 @@ manager = contextmanager.Neo4jDBConnectionManager(settings.NEO4J_RESOURCE_URI,
                                                   settings.NEO4J_PASSWORD)
 
 
+def query(query, executor=''):
+    try:
+        with manager.read as r:
+            return r.execute(query).fetchall()
+    except IndexError:
+        return {}
+
 def getNode(id, label):
     q = 'MATCH (n:{label} { id: {id} }) RETURN n'
     try:
@@ -85,13 +92,21 @@ def getPartyMembers(name):
 
 def getMonologueById(id):
     q = """
-        MATCH (n:Monologue {id: {id}})<-[r:`SPOKE`]-(person)
-        RETURN n.text
-        """
+        MATCH (n:Monologue {id: {id}})
+        RETURN n """#, n.date, n.wordHistogram, n.properNouns, n.speaker, n.crongressionalYear, n.text, n.numWords, n.wordSet, n.branch, n.party
+        #"""
     with manager.read as r:
         return r.execute(q, id=id).fetchall()
 
-def getMonologuesFor(name):
+def getMonologueSpokenBy(name):
+    q = """
+        MATCH (n:Person {name: {name}})-[r:`SPOKE`]->(monologue)
+        RETURN monologue.text, monologue.id ORDER BY monologue.id DESC
+        """
+    with manager.read as r:
+        return r.execute(q, name=name).fetchall()
+
+def getMonologueID(name):
     q = """
         MATCH (n:Person {name: {name}})-[r:`SPOKE`]->(monologue)
         RETURN monologue.id
@@ -102,7 +117,21 @@ def getMonologuesFor(name):
 def getCongressByName(name):
     q = " MATCH (n:Person)-[r:`SPOKE`]->(monologue) WHERE n.name =~'%s' RETURN monologue.congressionalYear" % (name)
     with manager.read as r:
+        return r.execute(q, name=name).fetchall()
+
+
+def getMonloguesByDate(year):
+    q = """ MATCH (m:Monologue) WHERE m.date='%s' RETURN DISTINCT m ORDER BY m.date DESC""" % (year)
+    with manager.read as r:
         return r.execute(q).fetchall()
+
+def getDatesForCongressNumber(number):
+    q = """
+        MATCH (m:Monologue)-[r:`PART OF`]->(c:Congress {id:  {number}})
+        RETURN DISTINCT m.date ORDER BY m.date DESC
+      """
+    with manager.read as r:
+        return r.execute(q, number="Congress "+number).fetchall()
 
 def getProperNounMentions(mentioner):
     q = """

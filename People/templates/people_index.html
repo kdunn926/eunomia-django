@@ -1,7 +1,7 @@
 {% if person_list %}
     <ul>
     {% for person in person_list %}
-         <li><a href={% url 'person_detail' person.name %}>{{person.name}} (with party affiliation:{{person.party }}) from State: {{ person.state }}</li>
+         <li><a href={% url 'People:person_detail' person.name %}>{{person.name}} (with party affiliation:{{person.party }}) from State: {{ person.state }}</a></li>
     {% endfor %}
     </ul>
 {% else %}

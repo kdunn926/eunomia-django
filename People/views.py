@@ -32,37 +32,42 @@ def index(request):
 def person_detail(request, name):
 	template_name = 'person_detail.html'
 
-	monologues = Monologue().getMonologuesFor(name)
+	monologues = Monologue().getMonologueSpokenBy(name)
 	parties = Person().getParty(name)
 	congress = Congress().getCongressSession(name)
 	state = Person().getState(name)
 
-	import time
+	#import time
 
-	start_time = time.time()
-	monologue_list = []
-	for monologue_id in monologues:
+	#start_time = time.time()
+	#monologue_list = []
+
+	#TODO
+	# fix sort, sort by date and sequence
+
+	for monologue_text, monologue_id in monologues:
+		#print monologue
 		monologue_dict = {}
-		date, house, session, text, sequence = monologue_id[0].split("-")
+		date, house, session, text, sequence = monologue_id.split("-")
 
-		monologue = Monologue().getMonologueById(monologue_id[0].encode('utf-8'))
+		#monologue = Monologue().getMonologueById(monologue_id[0].encode('utf-8'))
 
 		monologue_dict['date'] = date.encode('utf-8')
 		monologue_dict['house'] = house.encode('utf-8')
 		monologue_dict['session'] = session.encode('utf-8')
 		monologue_dict['sequence'] = sequence.encode('utf-8')
-		monologue_dict['monologue'] = monologue.encode('utf-8')
-		monologue_list.append(monologue_dict)
+		monologue_dict['monologue'] = monologue_text
+		#monologue_list.append(monologue_dict)
 
-	end_time = time.time()
-	print "Parsed %s monolouges in %s seconds" % (str(len(monologue_list)), str(end_time - start_time))
+	#end_time = time.time()
+	#print "Parsed %s monolouges in %s seconds" % (str(len(monologue_list)), str(end_time - start_time))
 
 	state_list = list(set([states[0].encode('utf-8') for states in state]))
 	congress_list = list(set([congress_session[0].encode('utf-8') for congress_session in congress]))
 	party_list = list(set([party[0].encode('utf-8') for party in parties]))
 
 	context = {'Sessions': congress_list,
-				'Monologues': monologue_list,
+				'Monologues': monologues,
 				'Party': party_list,
 				'State': state_list,
 				'Name': name}
