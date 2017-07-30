@@ -1,5 +1,9 @@
 # Django settings for CongressionalRecord project.
 
+import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 DEBUG = True
 
 ADMINS = (
@@ -9,13 +13,22 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'default_django_sqlite3.db',                      # Or path to database file if using sqlite3
-    }
+    #'default': {
+    #    'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+    #    'NAME': 'default_django_sqlite3.db',                      # Or path to database file if using sqlite3
+    #}
+#}
+
+    'default' : {
+        'HOST':'localhost',
+        'PORT':7474,
+        'ENDPOINT':'/db/data',
+        'USERNAME': 'neo4j',
+        'PASSWORD': 'dog'
+        }
 }
 
-NEO4J_RESOURCE_URI = "http://localhost:7474"
+NEO4J_RESOURCE_URI = "https://localhost:7474"
 NEO4J_USERNAME = "neo4j"
 NEO4J_PASSWORD = "dog"
 
@@ -59,7 +72,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = BASE_DIR
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -67,6 +80,8 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+    'includes/',
+    os.path.join(BASE_DIR, "static")
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -123,7 +138,10 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'People'
+    'People',
+    'Party',
+    'Congress',
+    'Monologues'
     #'neo4django.graph_auth'
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',

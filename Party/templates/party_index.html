@@ -1,0 +1,9 @@
+{% if parties %}
+    <ul>
+    {% for party in parties %}
+         <li><a href={% url 'Party:party_detail' party %}>{{party}}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No parties are available.</p>
+{% endif %}

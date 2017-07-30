@@ -1,0 +1,19 @@
+TODOS
+
+describe syptom
+
+examples of monologue_id where syptom is occuring
+
+adding a lookup
+	Check the second token from a proper noun match against names in the roster
+
+on monologues:
+	check number of words spoken
+	omit HR data
+	write query to check mode length of monologues, use as threshold for monologues (don't show less than 1/2)
+filter out roll-calls (add a conditional statement to exclude 'H.R.' and same for senate)
+add a link to monologue source
+	add lineage (source filename/hyperlink/details of raw data)
+
+should be page for almost every entity
+	date, party, congress (?), monolouge details in modal

@@ -1,0 +1,51 @@
+<h1>Monoluges for {{date}} for Congress {{congress_number}}</h1>
+
+<h2>Monoluges for the Senate</h2>
+<div>
+<table>
+	<tr>
+		<th>Text</th>
+		<th>Speaker</th>
+		<th>ID</th>
+	</tr>
+	{% for senate_monologue in senate_monologues %}
+		<tr>
+			<td>
+				{{ senate_monologue.text}}
+			</td>
+			<td>
+				<a href={% url 'People:person_detail' senate_monologue.speaker %}>{{ senate_monologue.speaker }}</a>
+			</td>
+			<td>
+				<a href={% url 'Monologues:monologue_detail' senate_monologue.id %}>More details for: {{ senate_monologue.id }}</a>
+			</td>
+		</tr>
+	{% endfor %}
+
+</table>
+</div>
+
+<h2>Monoluges for the House</h2>
+<div>
+<table>
+	<tr>
+		<th>Text</th>
+		<th>Speaker</th>
+		<th>ID</th>
+	</tr>
+	{% for house_monologue in house_monologues %}
+		<tr>
+			<td>
+				{{house_monologue.text}}
+			</td>
+			<td>
+				<a href={% url 'People:person_detail' house_monologue.speaker %}>{{ house_monologue.speaker }}</a>
+			</td>
+			<td>
+				<a href={% url 'Monologues:monologue_detail' house_monologue.id %}>More details for: {{ house_monologue.id }}</a>
+			</td>
+		</tr>
+	{% endfor %}
+
+</table>
+</div>

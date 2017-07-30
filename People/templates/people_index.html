@@ -1,10 +1,11 @@
-{% if people_list %}
+{% if person_list %}
     <ul>
-    {% for person in people_list %}
-        <li>{{ person.name }}, {{ person.state }}, {{ person.party }}</li>
+    {% for name, state, party in person_list %}
+         <li><a href={% url 'People:person_detail' name%}>{{ name }} (with party affiliation:{{ party }}) from State: {{ state }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
     <p>No people are available.</p>
 {% endif %}
+
 

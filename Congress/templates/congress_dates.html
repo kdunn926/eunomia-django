@@ -1,0 +1,5 @@
+<h1>Congress Dates for Congress {{congress_number}}</h1>
+
+{% for date in congress_dates %}
+	<li><a href={% url 'Monologues:monologues_by_date' date %}>{{date}}</a></li>
+{% endfor %}
