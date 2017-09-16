@@ -1,3 +1,8 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+
 {% if parties %}
     <ul>
     {% for party in parties %}
@@ -7,3 +12,5 @@
 {% else %}
     <p>No parties are available.</p>
 {% endif %}
+
+{% endblock %}

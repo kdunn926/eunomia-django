@@ -102,7 +102,7 @@ SECRET_KEY = '6=t9@+=+uf^!m)n4e1%8@=3v9m1ob096(0ty+1(3d&m80^-u!$'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'includes/'), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -111,7 +111,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-            'debug': True
+            'debug': True,
+            'string_if_invalid' : ' Invalid: "%s" ',
         },
     },
 ]
