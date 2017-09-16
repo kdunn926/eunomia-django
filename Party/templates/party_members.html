@@ -1,3 +1,9 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+</br>
+
 <h1>Members of {{ party }} ({{ party_abbreviation }})</h1>
 
 {% if member_list %}
@@ -11,3 +17,4 @@
 {% endif %}
 
 
+{% endblock %}
