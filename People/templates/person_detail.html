@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0047)profile.html -->
+
 <html lang="en">
   <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -14,18 +14,29 @@
     <link rel="icon" href="{% static 'img/Friends/favicon.png' %}">
     <title>Eunomia</title>
     <!-- Bootstrap core CSS -->
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!--<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="{% static 'css/animate.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/timeline.css' %}" rel="stylesheet">
+    <link href="{% static 'css/modal.css' %}" rel="stylesheet">
     <script src="{% static 'js/jquery.1.11.1.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!--<script src="{% static 'js/bootstrap.min.js' %}"></script> -->
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="{% static 'js/custom.js' %}"></script>
+
+    <script src="https://fb.me/react-with-addons-0.14.3.min.js"></script>
+    <script src="https://fb.me/react-dom-0.14.3.min.js"></script>
+
+    <!-- <script src="http://fb.me/react-0.10.0.min.js"></script> -->
+
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
   </head>
 
   <body class="animated fadeIn" data-feedly-mini="yes">
@@ -94,394 +105,473 @@
                                 </div>
                               </div>
                             </nav>
-                          </nav>
 
-                            <!-- Timeline content -->
-                            <div class="container">
-                                <div class="col-md-22 hidden">
-                                    <div class="cover-container">
-                                        <div class="social-cover"></div>
-                                        <div class="social-desc">
-                                           <div class="desc-content">
-                                            <h1 class="fg-white text-shadow">{{ profile.name }}</h1>
-                                              {% for session in profile.sessions %}
-                                                <h5 class="fg-white text-shadow">Member of Congress Sessions {{ session }}</h5>
-                                              {% endfor %}
-                                              <div style="margin-top:50px;"></div>
-                                           </div>
-                                        </div>
-                                        <div class="social-avatar">
-                                           <img class="img-avatar" src="{% static 'img/Friends/guy-3.jpg' %}" height="100" width="100">
-                                           <h4 class="fg-white text-center text-shadow">{{ profile.name }}</h4>
-                                           <h5 class="fg-white text-center" style="opacity:0.8;">{{ profile.party.0 }} from {{ profile.state.0 }}</h5>
-                                           <hr class="border-black75 text-shadow" style="border-width:2px;">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- cover content -->
-                                <div class="row">
-                                  <div class="col-md-10 no-paddin-xs">
-                                    <!-- cover and profile image-->
-                                    <div class="col-md-12 col-sm-12 col-xs-12 cover-content">
-                                        <div class="cover-container">
-                                            <div class="social-cover"></div>
-                                            <div class="social-desc">
-                                               <div class="desc-content">
-                                                  <h1 class="fg-white text-shadow">{{ profile.name }}</h1>
-                                                  <div style="margin-top:50px;"></div>
-                                               </div>
-                                            </div>
-                                            <div class="social-avatar">
-                                               <img class="img-avatar" src="{% static 'profile.image' %}" height="100" width="100">
-                                               <h4 class="fg-white text-center text-shadow">{{ profile.name }}</h4>
-                                               <h5 class="fg-white text-center" style="opacity:0.8;">{{ profile.party.0 }} from {{ profile.state.0 }}</h5>
-                                               <hr class="border-black75 text-shadow" style="border-width:2px;">
-                                            </div>
-                                            <div class="col-md-22 hidden">
-                                               <img class="img-avatar" src="{% static 'img/Friends/guy-3.jpg' %}" height="100" width="100">
-                                               <h4 class="fg-white text-center text-shadow">{{ profile.name }}</h4>
-                                               <h5 class="fg-white text-center" style="opacity:0.8;">{{ profile.party.0 }} from {{ profile.state.0 }}</h5>
-                                               <hr class="border-black75 text-shadow" style="border-width:2px;">
-                                            </div>
-                                        </div>
-                                    </div><!-- end cover and profile image-->
-                                    <!-- cover and profile image-->
-                                    <div class="col-md-22 hidden">
-                                        <div class="cover-container">
-                                            <div class="social-cover"></div>
-                                            <div class="social-desc">
-                                               <div class="desc-content">
-                                                <h1 class="fg-white text-shadow">{{ profile.name }}</h1>
-                                                {% for session in profile.sessions %}
-                                                  <h5 class="fg-white text-shadow">Member of Congress Sessions {{ session }}</h5>
-                                                {% endfor %}
-                                                <div style="margin-top:50px;"></div>
-                                               </div>
-                                            </div>
-                                            <div class="social-avatar">
-                                               <img class="img-avatar" src="{% static 'img/Friends/guy-3.jpg' %}" height="100" width="100">
-                                               <h4 class="fg-white text-center text-shadow">{{ profile.name }}</h4>
-                                               <h5 class="fg-white text-center" style="opacity:0.8;">{{ profile.party.0 }} from {{ profile.state.0 }}</h5>
-                                               <hr class="border-black75 text-shadow" style="border-width:2px;">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- cover menu -->
-                                    <div class="col-md-12  col-sm-12 col-xs-12">
-                                      <div class="panel-options">
-                                        <div class="navbar navbar-default navbar-cover">
-                                          <div class="container-fluid">
-                                            <div class="navbar-header">
-                                              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#profile-opts-navbar">
-                                                <span class="sr-only">Toggle navigation</span>
-                                                <span class="icon-bar"></span>
-                                                <span class="icon-bar"></span>
-                                                <span class="icon-bar"></span>
-                                              </button>
-                                            </div>
-
-                                            <div class="collapse navbar-collapse" id="profile-opts-navbar">
-                                              <ul class="nav navbar-nav navbar-right">
-                                                <li class="active"><a href="profile.html#"><i class="fa fa-tasks"></i>Timeline</a></li>
-                                                <li><a href="about.html"><i class="fa fa-info-circle"></i>About</a></li>
-                                                <li><a href="friends.html"><i class="fa fa-users"></i>Friends</a></li>
-                                                <!-- <li><a href="photos.html"><i class="fa fa-file-image-o"></i>Photos</a></li> -->
-                                                <!-- <li><a href="messages.html"><i class="fa fa-comment"></i>Messages</a></li> -->
-                                              </ul>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div><!-- cover menu -->
-                                  </div>
-                                </div><!-- cover content -->
-
-                                <div class="row">
-                                    <div class="col-md-22 hidden">
-                                        <div class="cover-container">
-                                            <div class="social-cover"></div>
-                                            <div class="social-desc">
-                                               <div class="desc-content">
-                                                  <h1 class="fg-white text-shadow">{{ profile.name }}</h1>
-                                                  {% for session in profile.sessions %}
-                                                    <h5 class="fg-white text-shadow">Member of Congress Sessions {{ session }}</h5>
-                                                  {% endfor %}
-                                                  <div style="margin-top:50px;"></div>
-                                               </div>
-                                            </div>
-                                            <div class="social-avatar">
-                                               <img class="img-avatar" src="{% static 'img/Friends/guy-3.jpg' %}" height="100" width="100">
-                                               <h4 class="fg-white text-center text-shadow">{{ profile.name }}</h4>
-                                               <h5 class="fg-white text-center" style="opacity:0.8;">{{ profile.party.0 }} from {{ profile.state.0 }}</h5>
-                                               <hr class="border-black75 text-shadow" style="border-width:2px;">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-10 no-paddin-xs">
-                                        <!-- left content (detail, frields, photos) -->
-                                        <div class="col-md-5 user-detail no-paddin-xs">
-                                            <!-- user detail -->
-                                            <div class="panel panel-default panel-user-detail">
-                                                <div class="panel-body">
-                                                  <ul class="list-unstyled">
-                                                    <li><i class="fa fa-suitcase"></i>Member of Party <a href="{% url 'Party:party_detail' profile.party.0 %}">{{profile.party.0}}</a></li>
-
-                                                    {% for session in profile.sessions %}
-                                                      <li><i class="fa fa-calendar"></i>Member of Congress <a href="{% url 'Congress:congress_dates' session %}">{{ session }}</a></li>
-                                                    {% endfor %}
-
-                                                    <li><i class="fa fa-globe"></i>From state <a href="#{%comment%}{% url 'People:state_detail' profile.state.0 %}{%endcomment%}">{{profile.state.0}}</a></li>
-                                                  </ul>
-                                                </div>
-                                                <!-- <div class="panel-footer text-center">
-                                                  <a href="profile.html#" class="btn btn-success">Read more...</a>
-                                                </div> -->
-                                            </div><!-- end user detail -->
-
-
-                                            <div class="col-md-22 hidden">
-                                                <div class="cover-container">
-                                                    <div class="social-cover"></div>
-                                                    <div class="social-desc">
-                                                       <div class="desc-content">
-                                                          <h1 class="fg-white text-shadow">{{ profile.name }}</h1>
-                                                          {% for session in profile.sessions %}
-                                                            <h5 class="fg-white text-shadow">Member of Congress Sessions {{ session }}</h5>
-                                                          {% endfor %}
-                                                          <div style="margin-top:50px;"></div>
-                                                       </div>
-                                                    </div>
-                                                    <div class="social-avatar">
-                                                       <img class="img-avatar" src="{% static 'img/Friends/guy-3.jpg' %}" height="100" width="100">
-                                                       <h4 class="fg-white text-center text-shadow">{{ profile.name }}</h4>
-                                                       <h5 class="fg-white text-center" style="opacity:0.8;">{{ profile.party.0 }} from {{ profile.state.0 }}</h5>
-                                                       <hr class="border-black75 text-shadow" style="border-width:2px;">
-                                                       <div class="text-center">
-                                                        <button role="button" class="btn btn-inverse btn-outlined btn-retainBg btn-brightblue" type="button">
-                                                          <span>follow me</span>
-                                                        </button>
-                                                       </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!-- friends -->
-                                            <div class="panel panel-white panel-friends">
-                                                <div class="panel-heading">
-                                                  <a href="{% url 'People:person_friends' profile.name %}" class="pull-right">View all&nbsp;<i class="fa fa-share-square-o"></i></a>
-                                                  <h3 class="panel-title">Friends -- Members of "{{ profile.party.0 }}"</h3>
-                                                </div>
-                                                <div class="panel-body text-center">
-                                                  <div class="friends">
-                                                  <!-- <table>
-                                                    <tr>
-                                                      <td style="margin: 2%; padding: 2%; position: left">
-                                                        <a href="{% url 'People:person_detail' profile.random_friends.0 %}">{{ profile.random_friends.0 }}</a>
-                                                      </td>
-                                                      <td style="margin: 2%; padding: 2%">
-                                                        <a href="{% url 'People:person_detail' profile.random_friends.1 %}">{{ profile.random_friends.1 }}</a>
-                                                      </td>
-                                                      <td style="margin: 2%; padding: 2%; position: right">
-                                                        <a href="{% url 'People:person_detail' profile.random_friends.2 %}">{{ profile.random_friends.2 }}</a>
-                                                      </td>
-                                                    </tr>
-                                                    <tr>
-                                                      <td style="margin: 2%; padding: 2%; position: left">
-                                                        <a href="{% url 'People:person_detail' profile.random_friends.3 %}">{{ profile.random_friends.3 }}</a>
-                                                      </td>
-                                                      <td style="margin: 2%; padding: 2%">
-                                                        <a href="{% url 'People:person_detail' profile.random_friends.4 %}">{{ profile.random_friends.4 }}</a>
-                                                      </td>
-                                                      <td style="margin: 2%; padding: 2%; position: right">
-                                                        <a href="{% url 'People:person_detail' profile.random_friends.5 %}">{{ profile.random_friends.5 }}</a>
-                                                      </td>
-                                                    </tr>
-                                                    </table> -->
-                                                      {% for random_friend in profile.random_friends %}
-                                                        <li>
-                                                          <a style="margin: 5px" href="{% url 'People:person_detail' random_friend %}">{{ random_friend }}</a>
-                                                        </li>
-                                                      {% endfor %}
-                                                  </div>
-                                                </div>
-                                            </div><!-- end friends -->
-
-                                            <div class="panel panel-white panel-likes">
-                                                <div class="panel-heading">
-                                                  <h3 class="panel-title"><i class="fa fa-thumbs-o-up"></i>&nbsp;Voting Record</h3>
-                                                </div>
-                                                <div class="panel-body">
-                                                  <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="">
-                                                    <!-- Indicators -->
-                                                    <ol class="carousel-indicators">
-                                                      <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                                                      <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                                                    </ol>
-
-                                                    <!-- Wrapper for slides -->
-                                                    <div class="carousel-inner" role="listbox-likes">
-                                                      <div class="item active">
-                                                        <div class="row">
-                                                          {% comment %}
-                                                          {% for vote in profile.votes %}
-                                                          <div class="col-md-6 col-sm-6 col-xs-3"><a href="profile.html#" class="thumbnail"><img src="{% static 'img/Likes/likes-5.png' %}" alt="Like"></a></div>
-                                                          {% endfor %}
-                                                          {% endcomment %}
-                                                        </div>
-                                                      </div>
-                                                      <div class="item">
-                                                        <div class="row">
-                                                          {% comment %}
-                                                          {% for vote in profile.votes %}
-                                                          <div class="col-md-6 col-sm-6 col-xs-3"><a href="profile.html#" class="thumbnail"><img src="{% static 'img/Likes/likes-5.png' %}" alt="Like"></a></div>
-                                                          {% endfor %}
-                                                          {% endcomment %}
-                                                        </div>
-                                                      </div>
-                                                    </div>
-
-                                                    <!-- Controls -->
-                                                    <a class="left carousel-control" href="profile.html#carousel-example-generic" role="button" data-slide="prev">
-                                                      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                                                      <span class="sr-only">Previous</span>
-                                                    </a>
-                                                    <a class="right carousel-control" href="profile.html#carousel-example-generic" role="button" data-slide="next">
-                                                      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                                                      <span class="sr-only">Next</span>
-                                                    </a>
-                                                  </div>
-                                                </div>
-                                            </div><!-- en likes -->
-
-                                            <!-- groups -->
-                                            <div class="panel panel-white panel-groups">
-                                                <div class="panel-heading">
-                                                  <h3 class="panel-title">Campaign Financers</h3>
-                                                </div>
-                                                <div class="panel-body">
-                                                  <ul class="list-group">
-                                                    {% comment %}
-                                                    {% for donor in profile.donors %}
-                                                    <li class="list-group-item">
-                                                      <div class="col-xs-3 col-sm-6 col-md-3">
-                                                          <img src="{% static 'img/Likes/likes-5.png' %}" alt="Group" class="img-responsive img-circle">
-                                                      </div>
-                                                      <div class="col-xs-9 col-sm-6">
-                                                          <span class="name">Bootdey competitors</span>
-                                                      </div>
-                                                      <div class="clearfix"></div>
-                                                    </li>
-                                                    {% endfor %}
-                                                    {% endcomment %}
-                                                  </ul>
-                                                </div>
-                                            </div><!-- end groups-->
-                                        </div><!-- end left content (detail, frields, photos) -->
-
-                                        <!-- right content-->
-                                        <div class="col-md-7 no-paddin-xs">
-                                            <!-- first post-->
-                                            <div class="panel panel-white post panel-shadow">
-                                              <div class="post-description">
-                                                  <h4 style="text-align:center">I said What?!</h4>
-                                              </div>
-                                            </div><!-- first post-->
-
-                                            {% for monologue_text, monologue_id, date in profile.monologues %}
-                                              <div class="panel panel-white post panel-shadow">
-                                                <div class="post-description">
-                                                    <p>{{monologue_text}}</p>
-                                                </div>
-                                                <div class='stats' style="text-align:center">
-                                                  <a href="{% url 'Monologues:monologues_by_date' date %}" class="stat-item">
-                                                    <i class="fa fa-calendar" style='padding-left:10%'></i>Said on {{ date }}
-                                                  </a>
-
-                                                  <a href="{% url 'Monologues:monologue_detail' monologue_id %}" class="stat-item">
-                                                    <i class="fa fa-tasks icon" style='padding-left:10%'>More Details</i>
-                                                  </a>
-                                                </div>
-
-                                              </div>
-                                            {% endfor %}
-
-                                            <div class="panel panel-white post-load-more panel-shadow text-center">
-                                                <button class="btn btn-success">
-                                                    <i class="fa fa-refresh"></i>Load More...
-                                                </button>
-                                            </div>
-                                            <div class="col-md-22 hidden">
-                                                <div class="cover-container">
-                                                    <div class="social-cover"></div>
-                                                    <div class="social-desc">
-                                                       <div class="desc-content">
-                                                        <h1 class="fg-white text-shadow">{{ profile.name }}</h1>
-
-                                                        {% for session in profile.sessions %}
-                                                          <h5 class="fg-white text-shadow">Member of Congress Sessions {{ session }}</h5>
-                                                        {% endfor %}
-
-                                                        <div style="margin-top:50px;"></div>
-                                                       </div>
-                                                    </div>
-                                                    <div class="social-avatar">
-                                                       <img class="img-avatar" src="{% static 'img/Friends/guy-3.jpg' %}" height="100" width="100">
-                                                       <h4 class="fg-white text-center text-shadow">{{ profile.name }}</h4>
-                                                       <h5 class="fg-white text-center" style="opacity:0.8;">{{ profile.party.0 }} from {{ profile.state.0 }}</h5>
-                                                       <hr class="border-black75 text-shadow" style="border-width:2px;">
-                                                       <div class="text-center">
-                                                        <button role="button" class="btn btn-inverse btn-outlined btn-retainBg btn-brightblue" type="button">
-                                                          <span>follow me</span>
-                                                        </button>
-                                                       </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div><!-- end right content-->
-                                    </div>
-                                </div>
                             </div>
-                            <footer class="welcome-footer">
-                                <div class="col-md-22 hidden">
-                                    <div class="cover-container">
-                                        <div class="social-cover"></div>
-                                        <div class="social-desc">
-                                           <div class="desc-content">
-                                            <h1 class="fg-white text-shadow">{{ profile.name }}</h1>
-                                            {% for session in profile.sessions %}
-                                            <h5 class="fg-white text-shadow">Member of Congress Sessions {{ session }}</h5>
-                                            {% endfor %}
-                                            <div style="margin-top:50px;"></div>
-                                           </div>
-                                        </div>
-                                        <div class="social-avatar">
-                                           <img class="img-avatar" src="{% static 'img/Friends/guy-3.jpg' %}" height="100" width="100">
-                                           <h4 class="fg-white text-center text-shadow">{{ profile.name }}</h4>
-                                           <h5 class="fg-white text-center" style="opacity:0.8;">{{ profile.party.0 }} from {{ profile.state.0 }}</h5>
-                                           <hr class="border-black75 text-shadow" style="border-width:2px;">
-                                        </div>
-                                    </div>
-                                </div>
-                              <div class="container">
-                                <p>
-                                  </p><div class="footer-links">
-                                    <a href="profile.html#">Terms of Use</a> |
-                                    <a href="profile.html#">Privacy Policy</a> |
-                                    <a href="profile.html#">Developers</a> |
-                                    <a href="profile.html#">Contact</a> |
-                                    <a href="profile.html#">About</a>
-                                  </div>
-                                  Copyright © Company - All rights reserved
-                                <p></p>
-                              </div>
-                            </footer>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </nav>
+
+<!-- Timeline content -->
+<div class="container">
+    <div class="col-md-22 hidden">
+        <div class="cover-container">
+            <div class="social-cover"></div>
+            <div class="social-desc">
+               <div class="desc-content">
+                <h1 class="fg-white text-shadow">{{ profile.name }}</h1>
+                  {% for session in profile.sessions %}
+                    <h5 class="fg-white text-shadow">Member of Congress Sessions {{ session }}</h5>
+                  {% endfor %}
+                  <div style="margin-top:50px;"></div>
+               </div>
+            </div>
+            <div class="social-avatar">
+               <img class="img-avatar" src="{% static 'img/Friends/guy-3.jpg' %}" height="100" width="100">
+               <h4 class="fg-white text-center text-shadow">{{ profile.name }}</h4>
+               <h5 class="fg-white text-center" style="opacity:0.8;">{{ profile.party.0 }} from {{ profile.state.0 }}</h5>
+               <hr class="border-black75 text-shadow" style="border-width:2px;">
+            </div>
+        </div>
+    </div>
+  </div>
+
+    <!-- cover content -->
+    <div class="row">
+      <div class="col-md-10 no-paddin-xs">
+        <!-- cover and profile image-->
+        <div class="col-md-12 col-sm-12 col-xs-12 cover-content">
+            <div class="cover-container">
+                <div class="social-cover"></div>
+                <div class="social-desc">
+                   <div class="desc-content">
+                      <h1 class="fg-white text-shadow">{{ profile.name }}</h1>
+                      <div style="margin-top:50px;"></div>
+                   </div>
+                </div>
+                <div class="social-avatar">
+                   <img class="img-avatar" src="{% static 'profile.image' %}" height="100" width="100">
+                   <h4 class="fg-white text-center text-shadow">{{ profile.name }}</h4>
+                   <h5 class="fg-white text-center" style="opacity:0.8;">{{ profile.party.0 }} from {{ profile.state.0 }}</h5>
+                   <hr class="border-black75 text-shadow" style="border-width:2px;">
+                </div>
+                <div class="col-md-22 hidden">
+                   <img class="img-avatar" src="{% static 'img/Friends/guy-3.jpg' %}" height="100" width="100">
+                   <h4 class="fg-white text-center text-shadow">{{ profile.name }}</h4>
+                   <h5 class="fg-white text-center" style="opacity:0.8;">{{ profile.party.0 }} from {{ profile.state.0 }}</h5>
+                   <hr class="border-black75 text-shadow" style="border-width:2px;">
+                </div>
+            </div>
+        </div><!-- end cover and profile image-->
+
+        <!-- cover and profile image-->
+        <div class="col-md-22 hidden">
+            <div class="cover-container">
+                <div class="social-cover"></div>
+                <div class="social-desc">
+                   <div class="desc-content">
+                    <h1 class="fg-white text-shadow">{{ profile.name }}</h1>
+                    {% for session in profile.sessions %}
+                      <h5 class="fg-white text-shadow">Member of Congress Sessions {{ session }}</h5>
+                    {% endfor %}
+                    <div style="margin-top:50px;"></div>
+                   </div>
+                </div>
+                <div class="social-avatar">
+                   <img class="img-avatar" src="{% static 'img/Friends/guy-3.jpg' %}" height="100" width="100">
+                   <h4 class="fg-white text-center text-shadow">{{ profile.name }}</h4>
+                   <h5 class="fg-white text-center" style="opacity:0.8;">{{ profile.party.0 }} from {{ profile.state.0 }}</h5>
+                   <hr class="border-black75 text-shadow" style="border-width:2px;">
+                </div>
+            </div>
+        </div>
+        <!-- cover menu -->
+        <div class="col-md-12  col-sm-12 col-xs-12">
+          <div class="panel-options">
+            <div class="navbar navbar-default navbar-cover">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#profile-opts-navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                </div>
+
+                <div class="collapse navbar-collapse" id="profile-opts-navbar">
+                  <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="profile.html#"><i class="fa fa-tasks"></i>Timeline</a></li>
+                    <li><a href="about.html"><i class="fa fa-info-circle"></i>About</a></li>
+                    <li><a href="friends.html"><i class="fa fa-users"></i>Friends</a></li>
+                    <!-- <li><a href="photos.html"><i class="fa fa-file-image-o"></i>Photos</a></li> -->
+                    <!-- <li><a href="messages.html"><i class="fa fa-comment"></i>Messages</a></li> -->
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- cover menu -->
+      </div>
+    </div><!-- cover content -->
+
+    <div class="row">
+        <div class="col-md-22 hidden">
+            <div class="cover-container">
+                <div class="social-cover"></div>
+                <div class="social-desc">
+                   <div class="desc-content">
+                      <h1 class="fg-white text-shadow">{{ profile.name }}</h1>
+                      {% for session in profile.sessions %}
+                        <h5 class="fg-white text-shadow">Member of Congress Sessions {{ session }}</h5>
+                      {% endfor %}
+                      <div style="margin-top:50px;"></div>
+                   </div>
+                </div>
+                <div class="social-avatar">
+                   <img class="img-avatar" src="{% static 'img/Friends/guy-3.jpg' %}" height="100" width="100">
+                   <h4 class="fg-white text-center text-shadow">{{ profile.name }}</h4>
+                   <h5 class="fg-white text-center" style="opacity:0.8;">{{ profile.party.0 }} from {{ profile.state.0 }}</h5>
+                   <hr class="border-black75 text-shadow" style="border-width:2px;">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-10 no-paddin-xs">
+            <!-- left content (detail, frields, photos) -->
+            <div class="col-md-5 user-detail no-paddin-xs">
+                <!-- user detail -->
+                <div class="panel panel-default panel-user-detail">
+                    <div class="panel-body">
+                      <ul class="list-unstyled">
+                        <li><i class="fa fa-suitcase"></i>Member of Party <a href="{% url 'Party:party_detail' profile.party.0 %}">{{profile.party.0}}</a></li>
+
+                        {% for session in profile.sessions %}
+                          <li><i class="fa fa-calendar"></i>Member of Congress <a href="{% url 'Congress:congress_dates' session %}">{{ session }}</a></li>
+                        {% endfor %}
+
+                        <li><i class="fa fa-globe"></i>From state <a href="#{%comment%}{% url 'People:state_detail' profile.state.0 %}{%endcomment%}">{{profile.state.0}}</a></li>
+                      </ul>
+                    </div>
+                    <!-- <div class="panel-footer text-center">
+                      <a href="profile.html#" class="btn btn-success">Read more...</a>
+                    </div> -->
+                </div><!-- end user detail -->
+
+
+                <div class="col-md-22 hidden">
+                    <div class="cover-container">
+                        <div class="social-cover"></div>
+                        <div class="social-desc">
+                           <div class="desc-content">
+                              <h1 class="fg-white text-shadow">{{ profile.name }}</h1>
+                              {% for session in profile.sessions %}
+                                <h5 class="fg-white text-shadow">Member of Congress Sessions {{ session }}</h5>
+                              {% endfor %}
+                              <div style="margin-top:50px;"></div>
+                           </div>
+                        </div>
+                        <div class="social-avatar">
+                           <img class="img-avatar" src="{% static 'img/Friends/guy-3.jpg' %}" height="100" width="100">
+                           <h4 class="fg-white text-center text-shadow">{{ profile.name }}</h4>
+                           <h5 class="fg-white text-center" style="opacity:0.8;">{{ profile.party.0 }} from {{ profile.state.0 }}</h5>
+                           <hr class="border-black75 text-shadow" style="border-width:2px;">
+                           <div class="text-center">
+                            <button role="button" class="btn btn-inverse btn-outlined btn-retainBg btn-brightblue" type="button">
+                              <span>follow me</span>
+                            </button>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- friends -->
+                <div class="panel panel-white panel-friends">
+                    <div class="panel-heading">
+                      <a href="{% url 'People:person_friends' profile.name %}" class="pull-right">View all&nbsp;<i class="fa fa-share-square-o"></i></a>
+                      <h3 class="panel-title">Friends -- Members of "{{ profile.party.0 }}"</h3>
+                    </div>
+                    <div class="panel-body text-center">
+                      <div class="friends">
+                        {% for random_friend in profile.random_friends %}
+                          <li>
+                            <a style="margin: 5px" href="{% url 'People:person_detail' random_friend %}">{{ random_friend }}</a>
+                          </li>
+                        {% endfor %}
+                      </div>
+                    </div>
+                </div><!-- end friends -->
+
+                <div class="panel panel-white panel-likes">
+                    <div class="panel-heading">
+                      <h3 class="panel-title"><i class="fa fa-thumbs-o-up"></i>&nbsp;Voting Record</h3>
+                    </div>
+                    <div class="panel-body">
+                      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                          <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                          <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        </ol>
+
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox-likes">
+                          <div class="item active">
+                            <div class="row">
+                              {% comment %}
+                              {% for vote in profile.votes %}
+                              <div class="col-md-6 col-sm-6 col-xs-3"><a href="profile.html#" class="thumbnail"><img src="{% static 'img/Likes/likes-5.png' %}" alt="Like"></a></div>
+                              {% endfor %}
+                              {% endcomment %}
+                            </div>
+                          </div>
+                          <div class="item">
+                            <div class="row">
+                              {% comment %}
+                              {% for vote in profile.votes %}
+                              <div class="col-md-6 col-sm-6 col-xs-3"><a href="profile.html#" class="thumbnail"><img src="{% static 'img/Likes/likes-5.png' %}" alt="Like"></a></div>
+                              {% endfor %}
+                              {% endcomment %}
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="profile.html#carousel-example-generic" role="button" data-slide="prev">
+                          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                          <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="profile.html#carousel-example-generic" role="button" data-slide="next">
+                          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                          <span class="sr-only">Next</span>
+                        </a>
+                      </div>
+                    </div>
+                </div><!-- end likes -->
+
+                <!-- groups -->
+                <div class="panel panel-white panel-groups">
+                    <div class="panel-heading">
+                      <h3 class="panel-title">Campaign Financers</h3>
+                    </div>
+                    <div class="panel-body">
+                      <ul class="list-group">
+                        {% comment %}
+                        {% for donor in profile.donors %}
+                        <li class="list-group-item">
+                          <div class="col-xs-3 col-sm-6 col-md-3">
+                              <img src="{% static 'img/Likes/likes-5.png' %}" alt="Group" class="img-responsive img-circle">
+                          </div>
+                          <div class="col-xs-9 col-sm-6">
+                              <span class="name">Bootdey competitors</span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </li>
+                        {% endfor %}
+                        {% endcomment %}
+                      </ul>
+                    </div>
+                </div><!-- end groups-->
+            </div><!-- end left content (detail, frields, photos) -->
+
+            <!-- right content-->
+            <div class="col-md-7 no-paddin-xs">
+                <!-- first post-->
+                <div class="panel panel-white post panel-shadow">
+                  <div class="post-description">
+                      <h4 style="text-align:center">I said What?!</h4>
+                  </div>
+                </div><!-- first post-->
+
+                {% for monologue_text, monologue_id, date in profile.monologues %}
+                  <div class="panel panel-white post panel-shadow">
+                    <div class="post-description">
+                        <p>{{monologue_text}}</p>
+                    </div>
+                    <div class='stats' style="text-align:center">
+                      <a href="{% url 'Monologues:monologues_by_date' date %}" class="stat-item"> <i class="fa fa-calendar" style='padding-left:10%'></i>Said on {{ date }}</a>
+                      <a style='padding-left:10%; cursor:pointer'<i class="fa fa-tasks icon" id='{{monologue_id}}_details'>More Details</i></a>
+
+                      <!-- Monologue info modal -->
+                        <section id='{{monologue_id}}_detail_modal' class="modal fade">
+                            <div class="modal-dialog">
+                              <h3 class="modal-title">Details for Monologue {{ monologue_id }}</h3>
+                              <div class="modal-content">
+                                <div class="modal-body"> <!-- Modal body -->
+                                  <form role='form' id="{{monologue_id}}_data_modal" method='get'>
+                                    <h5 id="{{monologue_id}}NumWords">Number of words: N/A</h5>
+                                    <h5 id="{{monologue_id}}MonologueSpeaker">Monologue Speaker: Unknown</h5>
+                                    <h5 id="{{monologue_id}}MonolugeSpeakerParty">Monologue Speaker's Party: Unknown</h5>
+                                    <h5 id="{{monologue_id}}CongressionalYear">Congressional year: Unknown</h5>
+                                    <h5 id="{{monologue_id}}CongressionalBranch">Congressional Branch: Unknown</h5>
+                                    <h5 id="{{monologue_id}}MonologueDate">Monologue date: Unknown</h5>
+                                    <h5 id="{{monologue_id}}ProperNouns">Proper Noun(s) mentioned: N/A </h5>
+                                    <h5 id="{{monologue_id}}WordSet">Set of words said: N/A</h5>
+<!--                                     <h5 id="{{monologue_id}}WordHistogram">Word Histogram: N/A</h5> -->
+                                    <div id="{{monologue_id}}WordHistogram">Word Histogram: N/A</div>
+                                  </form>
+                                  <td>
+                                    <tr><button id="{{monologue_id}}_detail_modal_close" class="btn btn-danger">Close</button></tr>
+                                  </td>
+                                </div> <!-- modal body -->
+                              </div> <!-- modal content -->
+                            </div> <!-- modal dialog -->
+                        </section>
+
+                        <script>
+                          $(document).ready(function(){
+                            $("#{{monologue_id}}_details").on('click', function(){
+                              $("#{{monologue_id}}_detail_modal").modal({show: true});
+                            }); // show modal
+                          });
+                        </script>
+
+                        <script>
+                          $('#{{monologue_id}}_details').on('click', function(e){
+                            e.preventDefault();
+
+                            $.ajax({
+                              type:"get",
+                              async:true,
+                              url:"{% url 'Monologues:monologue_detail' monologue_id %}",
+
+                              // the success function is called in the case of an http 200 response
+                              success: function(data, status) {
+                                document.getElementById('{{monologue_id}}NumWords').innerHTML = "Number of Words: " + data.numWords;
+                                document.getElementById('{{monologue_id}}MonologueSpeaker').innerHTML = "Party of Speaker: " + data.party;
+                                document.getElementById('{{monologue_id}}MonolugeSpeakerParty').innerHTML = "Monologue Speaker: " + data.speaker;
+                                document.getElementById('{{monologue_id}}CongressionalYear').innerHTML = "Congressional Year: " + data.congressionalYear;
+                                document.getElementById('{{monologue_id}}CongressionalBranch').innerHTML = "Congressional Branch: " + data.branch;
+                                document.getElementById('{{monologue_id}}MonologueDate').innerHTML = "Spoken on date: " + data.date;
+                                document.getElementById('{{monologue_id}}ProperNouns').innerHTML = "Proper Nouns Mentioned: " + data.properNouns;
+                                document.getElementById('{{monologue_id}}WordSet').innerHTML = "Set of Words: " + data.wordSet;
+                                // document.getElementById('{{monologue_id}}WordHistogram').innerHTML = "Word Historgram..Needs plotted: " + data.wordHistogram;
+
+
+                                var wordHistogram = data.wordHistogram;
+                                // console.log(wordHistogram);
+                                // var wordArray = []
+                                // for (var word in wordHistogram) {
+
+                                //   console.log(word);
+                                //   console.log(wordHistogram[word]);
+                                // }
+
+                                FusionCharts.ready(function () {
+                                  var props_column_chart = {
+                                      id: "column_chart",
+                                      type: "column2d",
+                                      width: "100%",
+                                      height: 400,
+                                      //dataFormat: "jsonurl",
+                                      dataSource: wordHistogram,
+                                  };
+                                  ReactDOM.render(
+                                      <ReactFC {...props_column_chart} />,
+                                      document.getElementById('{{monologue_id}}WordHistogram');
+                                  );
+                                })
+                              },
+
+                              error: function(xhr, ajaxOptions, thrownError){
+                                console.log(thrownError);
+                              },
+                            }); // end ajax calls
+                           }); // end details function
+
+                          //  Close the modal if a user clicks outside the modal
+                          var modal = document.getElementById('{{monologue_id}}_detail_modal');
+                          // When the user clicks anywhere outside of the modal, close it
+                          window.onclick = function(event) {
+                              if (event.target == modal) {
+                                  modal.style.display = "none";
+                              }
+                          }
+
+                          // Ensure that the close button works when clicked
+                          $("#{{monologue_id}}_detail_modal_close").on('click', function(){
+                            $('#{{monologue_id}}_detail_modal').modal('hide');
+                          });
+                        </script>
+                      </div>
+                  </div>
+
+                {% endfor %}
+
+                <!-- <div class="panel panel-white post-load-more panel-shadow text-center">
+                    <button class="btn btn-success">
+                        <i class="fa fa-refresh"></i>Load More...
+                    </button>
+                </div> -->
+                <div class="col-md-22 hidden">
+                    <div class="cover-container">
+                        <div class="social-cover"></div>
+                        <div class="social-desc">
+                           <div class="desc-content">
+                            <h1 class="fg-white text-shadow">{{ profile.name }}</h1>
+
+                            {% for session in profile.sessions %}
+                              <h5 class="fg-white text-shadow">Member of Congress Sessions {{ session }}</h5>
+                            {% endfor %}
+
+                            <div style="margin-top:50px;"></div>
+                           </div>
+                        </div>
+                        <div class="social-avatar">
+                           <img class="img-avatar" src="{% static 'img/Friends/guy-3.jpg' %}" height="100" width="100">
+                           <h4 class="fg-white text-center text-shadow">{{ profile.name }}</h4>
+                           <h5 class="fg-white text-center" style="opacity:0.8;">{{ profile.party.0 }} from {{ profile.state.0 }}</h5>
+                           <hr class="border-black75 text-shadow" style="border-width:2px;">
+                           <div class="text-center">
+                            <button role="button" class="btn btn-inverse btn-outlined btn-retainBg btn-brightblue" type="button">
+                              <span>follow me</span>
+                            </button>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end right content-->
+
+        </div>
     </div>
 
+    </div>
+    <footer class="welcome-footer">
+        <div class="col-md-22 hidden">
+            <div class="cover-container">
+                <div class="social-cover"></div>
+                <div class="social-desc">
+                   <div class="desc-content">
+                    <h1 class="fg-white text-shadow">{{ profile.name }}</h1>
+                    {% for session in profile.sessions %}
+                    <h5 class="fg-white text-shadow">Member of Congress Sessions {{ session }}</h5>
+                    {% endfor %}
+                    <div style="margin-top:50px;"></div>
+                   </div>
+                </div>
+                <div class="social-avatar">
+                   <img class="img-avatar" src="{% static 'img/Friends/guy-3.jpg' %}" height="100" width="100">
+                   <h4 class="fg-white text-center text-shadow">{{ profile.name }}</h4>
+                   <h5 class="fg-white text-center" style="opacity:0.8;">{{ profile.party.0 }} from {{ profile.state.0 }}</h5>
+                   <hr class="border-black75 text-shadow" style="border-width:2px;">
+                </div>
+            </div>
+        </div>
+      <div class="container">
+        <p>
+          </p><div class="footer-links">
+            <a href="profile.html#">Terms of Use</a> |
+            <a href="profile.html#">Privacy Policy</a> |
+            <a href="profile.html#">Developers</a> |
+            <a href="profile.html#">Contact</a> |
+            <a href="profile.html#">About</a>
+          </div>
+          Copyright © Company - All rights reserved
+        <p></p>
+      </div>
+    </footer>
     <div id="feedly-mini" title="feedly Mini tookit"></div>
+
   </body>
 </html>

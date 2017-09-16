@@ -2,7 +2,12 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
+from django.core.serializers import serialize
+from django.http import HttpResponseForbidden, HttpResponse
+
 from .models import Monologue
+
+import json
 
 # Create your views here.
 
@@ -38,28 +43,31 @@ def monologues_by_date(request, date):
 def monologue_detail(request, id):
 	template_name = 'monologue_detail.html'
 	context_object_name = 'monologues'
-
 	context = {}
 
-	monologues = Monologue().getMonologueById(id)
-	context['monologue_info'] = monologues
-	#monologues = [m[0] for m in tuple_monologues]
-	#print monologues.keys()
-	#congress_number = monologues[1]['congressionalYear']
+	if request.method == 'GET':
+		if request.is_ajax():
 
-	#senate_monologues = []
-	#house_monologues = []
+			monologues = Monologue().getMonologueById(id)
 
-	#for m in monologues:
-	#	if m['branch'].lower() == 'house':
-	#		house_monologues.append(m)
-	#	elif m['branch'].lower() == 'senate':
-	#		senate_monologues.append(m)
-			#print m['text']
-	#	else:
-	#		print "I AM CONFUSED...."
+			# Reformat the word histogram for better parsing in the JavaScript
+			wordHistogram = monologues['wordHistogram'].encode('utf-8').strip("'").strip("[").strip("]").strip().split(",")
+			word_count_dict = {}
+			for word_count in wordHistogram:
+			 	word, count = word_count.split(":")
+			 	word = word.strip().strip("'")
+			 	count = count.strip().strip("'")
+			 	word_count_dict[word] = count
 
-	#context = {'monologues': monologues, 'congress_number':congress_number, 'date': date,
-	#			'senate_monologues':senate_monologues, 'house_monologues': house_monologues}
+			monologues['wordHistogram'] = word_count_dict
 
-	return render(request, template_name, context)
+			data = json.dumps(monologues)
+			return HttpResponse(data, content_type='json')
+
+		else:
+			monologues = Monologue().getMonologueById(id)
+			context['monologue_info'] = monologues
+			return render(request, template_name, context)
+
+		return redirect(request['HTTP_REFERRER'])
+	return redirect(request['HTTP_REFERRER'])
