@@ -80,9 +80,13 @@ def party_members(request, name):
 			}
 
 	members = Party().getPartyMembers(name)
-
+	#print members
 	for member in members:
-		member_list.append(member)
+		clean_member = member['name'].replace("^", "").replace(":", "").replace("(", "").replace(")", "").replace("'", "")
+		member_tuple = (clean_member, member['state'])
+		member_list.append(member_tuple)
+
+	context['member_list'] = member_list
 
 	return render(request, template_name, context)
 

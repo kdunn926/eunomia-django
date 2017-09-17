@@ -7,9 +7,8 @@ urlpatterns = [
 
 	url(r'^$', views.index, name='people_index'),
 
-	# The .* regex below is bad -- lots of corner cases to consider when fixing
-	url(r'^(?P<name>(.*))/$', views.person_detail, name='person_detail'),
-	url(r'^(?P<name>(.*))/friends/$', views.person_friends, name='person_friends'),
+	url(r'^(?P<name>([\w+\.?\s?\w+\.?]+))/$', views.person_detail, name='person_detail'),
+	url(r'^(?P<name>([\w+\.?\s?\w+\.?]+))/friends/$', views.person_friends, name='person_friends'),
 
 	url(r'^state/(?P<state>(\w+))/$', views.state_detail, name='state_detail'),
 

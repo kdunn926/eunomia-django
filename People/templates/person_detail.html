@@ -97,7 +97,7 @@
                   <ul class="nav navbar-nav navbar-right">
                     <li class="active"><a href="profile.html#"><i class="fa fa-tasks"></i>Timeline</a></li>
                     <li><a href="about.html"><i class="fa fa-info-circle"></i>About</a></li>
-                    <li><a href="friends.html"><i class="fa fa-users"></i>Friends</a></li>
+                    <li><a href="{% url 'People:person_friends' profile.name %}"><i class="fa fa-users"></i>Friends</a></li>
                     <!-- <li><a href="photos.html"><i class="fa fa-file-image-o"></i>Photos</a></li> -->
                     <!-- <li><a href="messages.html"><i class="fa fa-comment"></i>Messages</a></li> -->
                   </ul>

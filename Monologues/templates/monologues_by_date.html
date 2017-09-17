@@ -7,207 +7,213 @@
 <h1>Monoluges for {{date}} for Congress {{congress_number}}</h1>
 
 <h2>Monologues for the Senate</h2>
-<div>
-<table>
-	<tr>
-		<th>Text</th>
-		<th>Speaker</th>
-		<th>ID</th>
-	</tr>
-	{% for senate_monologue in senate_monologues %}
+	<table style="height:30px; overflow:auto; width: 100%">
 		<tr>
-			<td>
-				{{ senate_monologue.text}}
-			</td>
-			<td>
-				<a href={% url 'People:person_detail' senate_monologue.speaker %}>{{ senate_monologue.speaker }}</a>
-			</td>
-			<td>
-				<!-- <a href={% url 'Monologues:monologue_detail' senate_monologue.id %}>More details for: {{ senate_monologue.id }}</a> -->
-				<a style='padding-left:10%; cursor:pointer'<i class="fa fa-tasks icon" id='{{ senate_monologue.id }}_details'>More Details</i></a>
-
-				<!-- Monologue info modal -->
-				<section id='{{ senate_monologue.id }}_detail_modal' class="modal fade">
-				    <div class="modal-dialog">
-				      <h3 class="modal-title">Details for Monologue {{ senate_monologue.id }}</h3>
-				      <div class="modal-content">
-				        <div class="modal-body"> <!-- Modal body -->
-				          <form role='form' id="{{ senate_monologue.id }}_data_modal" method='get'>
-				            <h5 id="{{ senate_monologue.id }}NumWords">Number of words: N/A</h5>
-				            <h5 id="{{ senate_monologue.id }}MonologueSpeaker">Monologue Speaker: Unknown</h5>
-				            <h5 id="{{ senate_monologue.id }}MonolugeSpeakerParty">Monologue Speaker's Party: Unknown</h5>
-				            <h5 id="{{ senate_monologue.id }}CongressionalYear">Congressional year: Unknown</h5>
-				            <h5 id="{{ senate_monologue.id }}CongressionalBranch">Congressional Branch: Unknown</h5>
-				            <h5 id="{{ senate_monologue.id }}MonologueDate">Monologue date: Unknown</h5>
-				            <h5 id="{{ senate_monologue.id }}ProperNouns">Proper Noun(s) mentioned: N/A </h5>
-				            <h5 id="{{ senate_monologue.id }}WordSet">Set of words said: N/A</h5>
-				<!--                                     <h5 id="{{ senate_monologue.id }}WordHistogram">Word Histogram: N/A</h5> -->
-				            <div id="{{ senate_monologue.id }}WordHistogram">Word Histogram: N/A</div>
-				            <button id="{{ senate_monologue.id }}_detail_modal_close" class="btn btn-danger">Close</button>
-				          </form>
-				          <td>
-				            <tr></tr>
-				          </td>
-				        </div> <!-- modal body -->
-				      </div> <!-- modal content -->
-				    </div> <!-- modal dialog -->
-				</section>
-
-				<script>
-				  $(document).ready(function(){
-				    $("#{{ senate_monologue.id }}_details").on('click', function(){
-				      $("#{{ senate_monologue.id }}_detail_modal").modal({show: true});
-				    }); // show modal
-				  });
-				</script>
-
-				<script>
-				  $('#{{ senate_monologue.id }}_details').on('click', function(e){
-				    e.preventDefault();
-
-				    $.ajax({
-				      type:"get",
-				      async:true,
-				      url:"{% url 'Monologues:monologue_detail' senate_monologue.id %}",
-
-				      // the success function is called in the case of an http 200 response
-				      success: function(data, status) {
-				        document.getElementById('{{ senate_monologue.id }}NumWords').innerHTML = "Number of Words: " + data.numWords;
-				        document.getElementById('{{ senate_monologue.id }}MonologueSpeaker').innerHTML = "Party of Speaker: " + data.party;
-				        document.getElementById('{{ senate_monologue.id }}MonolugeSpeakerParty').innerHTML = "Monologue Speaker: " + data.speaker;
-				        document.getElementById('{{ senate_monologue.id }}CongressionalYear').innerHTML = "Congressional Year: " + data.congressionalYear;
-				        document.getElementById('{{ senate_monologue.id }}CongressionalBranch').innerHTML = "Congressional Branch: " + data.branch;
-				        document.getElementById('{{ senate_monologue.id }}MonologueDate').innerHTML = "Spoken on date: " + data.date;
-				        document.getElementById('{{ senate_monologue.id }}ProperNouns').innerHTML = "Proper Nouns Mentioned: " + data.properNouns;
-				        document.getElementById('{{ senate_monologue.id }}WordSet').innerHTML = "Set of Words: " + data.wordSet;
-				        // document.getElementById('{{ senate_monologue.id }}WordHistogram').innerHTML = "Word Historgram..Needs plotted: " + data.wordHistogram;
-				      }
-				    });
-				  });
-
-
-				  //  Close the modal if a user clicks outside the modal
-				  var modal = document.getElementById('{{ senate_monologue.id }}_detail_modal');
-				  // When the user clicks anywhere outside of the modal, close it
-				  window.onclick = function(event) {
-				      if (event.target == modal) {
-				          modal.style.display = "none";
-				      }
-				  }
-
-				  // Ensure that the close button works when clicked
-				  $("#{{ senate_monologue.id }}_detail_modal_close").on('click', function(){
-				    e.preventDefault();
-				    $('#{{ senate_monologue.id }}_detail_modal').modal('hide');
-				  });
-				</script>
-			</td>
+				<td style='text-align: left; padding-left: 40%'><strong>Monologue Text</strong></td>
+				<td style='text-align: center; padding-left: 60%'><strong>Speaker</strong></td>
+				<td style='text-align: right; padding-right: 75px'><strong>ID</strong></td>
 		</tr>
-	{% endfor %}
+	</table>
+<div style="height:300px;overflow:auto;">
+	<table>
 
-</table>
+		{% for senate_monologue in senate_monologues %}
+
+			<tr>
+				<td style="width:75%">
+					{{ senate_monologue.text}}
+				</td>
+				<td>
+					<a href={% url 'People:person_detail' senate_monologue.speaker %}>{{ senate_monologue.speaker }}</a>
+				</td>
+				<td>
+					<!-- <a href={% url 'Monologues:monologue_detail' senate_monologue.id %}>More details for: {{ senate_monologue.id }}</a> -->
+					<a style='padding-left:10%; cursor:pointer' id='{{ senate_monologue.id }}_details'>More Details</a>
+
+					<!-- Monologue info modal -->
+					<section id='{{ senate_monologue.id }}_detail_modal' class="modal fade">
+					    <div class="modal-dialog">
+					      <h3 class="modal-title">Details for Monologue {{ senate_monologue.id }}</h3>
+					      <div class="modal-content">
+					        <div class="modal-body"> <!-- Modal body -->
+					          <form role='form' id="{{ senate_monologue.id }}_data_modal" method='get'>
+					            <h5 id="{{ senate_monologue.id }}NumWords">Number of words: N/A</h5>
+					            <h5 id="{{ senate_monologue.id }}MonologueSpeaker">Monologue Speaker: Unknown</h5>
+					            <h5 id="{{ senate_monologue.id }}MonolugeSpeakerParty">Monologue Speaker's Party: Unknown</h5>
+					            <h5 id="{{ senate_monologue.id }}CongressionalYear">Congressional year: Unknown</h5>
+					            <h5 id="{{ senate_monologue.id }}CongressionalBranch">Congressional Branch: Unknown</h5>
+					            <h5 id="{{ senate_monologue.id }}MonologueDate">Monologue date: Unknown</h5>
+					            <h5 id="{{ senate_monologue.id }}ProperNouns">Proper Noun(s) mentioned: N/A </h5>
+					            <h5 id="{{ senate_monologue.id }}WordSet">Set of words said: N/A</h5>
+					<!--                                     <h5 id="{{ senate_monologue.id }}WordHistogram">Word Histogram: N/A</h5> -->
+					            <div id="{{ senate_monologue.id }}WordHistogram">Word Histogram: N/A</div>
+					            <button id="{{ senate_monologue.id }}_detail_modal_close" class="btn btn-danger">Close</button>
+					          </form>
+					          <td>
+					            <tr></tr>
+					          </td>
+					        </div> <!-- modal body -->
+					      </div> <!-- modal content -->
+					    </div> <!-- modal dialog -->
+					</section>
+
+					<script>
+					  $(document).ready(function(){
+					    $("#{{ senate_monologue.id }}_details").on('click', function(){
+					      $("#{{ senate_monologue.id }}_detail_modal").modal({show: true});
+					    }); // show modal
+					  });
+					</script>
+
+					<script>
+					  $('#{{ senate_monologue.id }}_details').on('click', function(e){
+					    e.preventDefault();
+
+					    $.ajax({
+					      type:"get",
+					      async:true,
+					      url:"{% url 'Monologues:monologue_detail' senate_monologue.id %}",
+
+					      // the success function is called in the case of an http 200 response
+					      success: function(data, status) {
+					        document.getElementById('{{ senate_monologue.id }}NumWords').innerHTML = "Number of Words: " + data.numWords;
+					        document.getElementById('{{ senate_monologue.id }}MonologueSpeaker').innerHTML = "Party of Speaker: " + data.party;
+					        document.getElementById('{{ senate_monologue.id }}MonolugeSpeakerParty').innerHTML = "Monologue Speaker: " + data.speaker;
+					        document.getElementById('{{ senate_monologue.id }}CongressionalYear').innerHTML = "Congressional Year: " + data.congressionalYear;
+					        document.getElementById('{{ senate_monologue.id }}CongressionalBranch').innerHTML = "Congressional Branch: " + data.branch;
+					        document.getElementById('{{ senate_monologue.id }}MonologueDate').innerHTML = "Spoken on date: " + data.date;
+					        document.getElementById('{{ senate_monologue.id }}ProperNouns').innerHTML = "Proper Nouns Mentioned: " + data.properNouns;
+					        document.getElementById('{{ senate_monologue.id }}WordSet').innerHTML = "Set of Words: " + data.wordSet;
+					        // document.getElementById('{{ senate_monologue.id }}WordHistogram').innerHTML = "Word Historgram..Needs plotted: " + data.wordHistogram;
+					      }
+					    });
+					  });
+
+
+					  //  Close the modal if a user clicks outside the modal
+					  var modal = document.getElementById('{{ senate_monologue.id }}_detail_modal');
+					  // When the user clicks anywhere outside of the modal, close it
+					  window.onclick = function(event) {
+					      if (event.target == modal) {
+					          modal.style.display = "none";
+					      }
+					  }
+
+					  // Ensure that the close button works when clicked
+					  $("#{{ senate_monologue.id }}_detail_modal_close").on('click', function(){
+					    e.preventDefault();
+					    $('#{{ senate_monologue.id }}_detail_modal').modal('hide');
+					  });
+					</script>
+				</td>
+			</tr>
+
+		{% endfor %}
+
+	</table>
 </div>
 
 <h2>Monoluges for the House</h2>
-<div>
-<table>
-	<tr>
-		<th>Text</th>
-		<th>Speaker</th>
-		<th>ID</th>
-	</tr>
-	{% for house_monologue in house_monologues %}
+<div style="height:100px;overflow:auto;">
+	<table>
 		<tr>
-			<td>
-				{{house_monologue.text}}
-			</td>
-			<td>
-				<a href={% url 'People:person_detail' house_monologue.speaker %}>{{ house_monologue.speaker }}</a>
-			</td>
-			<td>
-				<!-- <a href={% url 'Monologues:monologue_detail' house_monologue.id %}>More details for: {{ house_monologue.id }}</a> -->
-				<a style='padding-left:10%; cursor:pointer'<i class="fa fa-tasks icon" id='{{ house_monologue.id }}_details'>More Details</i></a>
-			</td>
+			<th>Text</th>
+			<th>Speaker</th>
+			<th>ID</th>
 		</tr>
+		{% for house_monologue in house_monologues %}
+			<tr>
+				<td>
+					{{house_monologue.text}}
+				</td>
+				<td>
+					<a href={% url 'People:person_detail' house_monologue.speaker %}>{{ house_monologue.speaker }}</a>
+				</td>
+				<td>
+					<a style='padding-left:10%; cursor:pointer' id='{{ house_monologue.id }}_details'>More Details</a>
 
-		<!-- Monologue info modal -->
-		<section id='{{ house_monologue.id }}_detail_modal' class="modal fade">
-		    <div class="modal-dialog">
-		      <h3 class="modal-title">Details for Monologue {{ house_monologue.id }}</h3>
-		      <div class="modal-content">
-		        <div class="modal-body"> <!-- Modal body -->
-		          <form role='form' id="{{ house_monologue.id }}_data_modal" method='get'>
-		            <h5 id="{{ house_monologue.id }}NumWords">Number of words: N/A</h5>
-		            <h5 id="{{ house_monologue.id }}MonologueSpeaker">Monologue Speaker: Unknown</h5>
-		            <h5 id="{{ house_monologue.id }}MonolugeSpeakerParty">Monologue Speaker's Party: Unknown</h5>
-		            <h5 id="{{ house_monologue.id }}CongressionalYear">Congressional year: Unknown</h5>
-		            <h5 id="{{ house_monologue.id }}CongressionalBranch">Congressional Branch: Unknown</h5>
-		            <h5 id="{{ house_monologue.id }}MonologueDate">Monologue date: Unknown</h5>
-		            <h5 id="{{ house_monologue.id }}ProperNouns">Proper Noun(s) mentioned: N/A </h5>
-		            <h5 id="{{ house_monologue.id }}WordSet">Set of words said: N/A</h5>
-					<!-- <h5 id="{{ house_monologue.id }}WordHistogram">Word Histogram: N/A</h5>  -->
-		            <div id="{{ house_monologue.id }}WordHistogram">Word Histogram: N/A</div>
-		          </form>
-		          <td>
-		            <tr><button id="{{ house_monologue.id }}_detail_modal_close" class="btn btn-danger">Close</button></tr>
-		          </td>
-		        </div> <!-- modal body -->
-		      </div> <!-- modal content -->
-		    </div> <!-- modal dialog -->
-		</section>
+					<!-- Monologue info modal -->
+					<section id='{{ house_monologue.id }}_detail_modal' class="modal fade">
+					    <div class="modal-dialog">
+					      <h3 class="modal-title">Details for Monologue {{ house_monologue.id }}</h3>
+					      <div class="modal-content">
+					        <div class="modal-body"> <!-- Modal body -->
+					          <form role='form' id="{{ house_monologue.id }}_data_modal" method='get'>
+					            <h5 id="{{ house_monologue.id }}NumWords">Number of words: N/A</h5>
+					            <h5 id="{{ house_monologue.id }}MonologueSpeaker">Monologue Speaker: Unknown</h5>
+					            <h5 id="{{ house_monologue.id }}MonolugeSpeakerParty">Monologue Speaker's Party: Unknown</h5>
+					            <h5 id="{{ house_monologue.id }}CongressionalYear">Congressional year: Unknown</h5>
+					            <h5 id="{{ house_monologue.id }}CongressionalBranch">Congressional Branch: Unknown</h5>
+					            <h5 id="{{ house_monologue.id }}MonologueDate">Monologue date: Unknown</h5>
+					            <h5 id="{{ house_monologue.id }}ProperNouns">Proper Noun(s) mentioned: N/A </h5>
+					            <h5 id="{{ house_monologue.id }}WordSet">Set of words said: N/A</h5>
+								<!-- <h5 id="{{ house_monologue.id }}WordHistogram">Word Histogram: N/A</h5>  -->
+					            <div id="{{ house_monologue.id }}WordHistogram">Word Histogram: N/A</div>
+					            <button id="{{ house_monologue.id }}_detail_modal_close" class="btn btn-danger">Close</button>
 
-		<script>
-		  $(document).ready(function(){
-		    $("#{{ house_monologue.id }}_details").on('click', function(){
-		      $("#{{ house_monologue.id }}_detail_modal").modal({show: true});
-		    }); // show modal
-		  });
-		</script>
+					          </form>
+					          <td>
+					          </td>
+					        </div> <!-- modal body -->
+					      </div> <!-- modal content -->
+					    </div> <!-- modal dialog -->
+					</section>
 
-		<script>
-		  $('#{{ house_monologue.id }}_details').on('click', function(e){
-		    e.preventDefault();
+					<script>
+					  $(document).ready(function(){
+					    $("#{{ house_monologue.id }}_details").on('click', function(){
+					      $("#{{ house_monologue.id }}_detail_modal").modal({show: true});
+					    }); // show modal
+					  });
+					</script>
 
-		    $.ajax({
-		      type:"get",
-		      async:true,
-		      url:"{% url 'Monologues:monologue_detail' house_monologue.id %}",
+					<script>
+					  $('#{{ house_monologue.id }}_details').on('click', function(e){
+					    e.preventDefault();
 
-		      // the success function is called in the case of an http 200 response
-		      success: function(data, status) {
-		        document.getElementById('{{ house_monologue.id }}NumWords').innerHTML = "Number of Words: " + data.numWords;
-		        document.getElementById('{{ house_monologue.id }}MonologueSpeaker').innerHTML = "Party of Speaker: " + data.party;
-		        document.getElementById('{{ house_monologue.id }}MonolugeSpeakerParty').innerHTML = "Monologue Speaker: " + data.speaker;
-		        document.getElementById('{{ house_monologue.id }}CongressionalYear').innerHTML = "Congressional Year: " + data.congressionalYear;
-		        document.getElementById('{{ house_monologue.id }}CongressionalBranch').innerHTML = "Congressional Branch: " + data.branch;
-		        document.getElementById('{{ house_monologue.id }}MonologueDate').innerHTML = "Spoken on date: " + data.date;
-		        document.getElementById('{{ house_monologue.id }}ProperNouns').innerHTML = "Proper Nouns Mentioned: " + data.properNouns;
-		        document.getElementById('{{ house_monologue.id }}WordSet').innerHTML = "Set of Words: " + data.wordSet;
-		        // document.getElementById('{{ house_monologue.id }}WordHistogram').innerHTML = "Word Historgram..Needs plotted: " + data.wordHistogram;
-		      }
-		    });
-		  });
+					    $.ajax({
+					      type:"get",
+					      async:true,
+					      url:"{% url 'Monologues:monologue_detail' house_monologue.id %}",
+
+					      // the success function is called in the case of an http 200 response
+					      success: function(data, status) {
+					        document.getElementById('{{ house_monologue.id }}NumWords').innerHTML = "Number of Words: " + data.numWords;
+					        document.getElementById('{{ house_monologue.id }}MonologueSpeaker').innerHTML = "Party of Speaker: " + data.party;
+					        document.getElementById('{{ house_monologue.id }}MonolugeSpeakerParty').innerHTML = "Monologue Speaker: " + data.speaker;
+					        document.getElementById('{{ house_monologue.id }}CongressionalYear').innerHTML = "Congressional Year: " + data.congressionalYear;
+					        document.getElementById('{{ house_monologue.id }}CongressionalBranch').innerHTML = "Congressional Branch: " + data.branch;
+					        document.getElementById('{{ house_monologue.id }}MonologueDate').innerHTML = "Spoken on date: " + data.date;
+					        document.getElementById('{{ house_monologue.id }}ProperNouns').innerHTML = "Proper Nouns Mentioned: " + data.properNouns;
+					        document.getElementById('{{ house_monologue.id }}WordSet').innerHTML = "Set of Words: " + data.wordSet;
+					        // document.getElementById('{{ house_monologue.id }}WordHistogram').innerHTML = "Word Historgram..Needs plotted: " + data.wordHistogram;
+					      }
+					    });
+					  });
 
 
-		  //  Close the modal if a user clicks outside the modal
-		  var modal = document.getElementById('{{ house_monologue.id }}_detail_modal');
-		  // When the user clicks anywhere outside of the modal, close it
-		  window.onclick = function(event) {
-		      if (event.target == modal) {
-		          modal.style.display = "none";
-		      }
-		  }
+					  //  Close the modal if a user clicks outside the modal
+					  var modal = document.getElementById('{{ house_monologue.id }}_detail_modal');
+					  // When the user clicks anywhere outside of the modal, close it
+					  window.onclick = function(event) {
+					      if (event.target == modal) {
+					          modal.style.display = "none";
+					      }
+					  }
 
-		  // Ensure that the close button works when clicked
-		  $("#{{ house_monologue.id }}_detail_modal_close").on('click', function(){
-		  	e.preventDefault();
-		    $('#{{ house_monologue.id }}_detail_modal').modal('hide');
-		  });
-		</script>
+					  // Ensure that the close button works when clicked
+					  $("#{{ house_monologue.id }}_detail_modal_close").on('click', function(){
+					  	e.preventDefault();
+					    $('#{{ house_monologue.id }}_detail_modal').modal('hide');
+					  });
+					</script>
+				</td>
+			</tr>
+		{% endfor %}
 
-	{% endfor %}
-
-</table>
+	</table>
 </div>
+
+</br>
 
 {% endblock %}

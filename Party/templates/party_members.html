@@ -8,8 +8,8 @@
 
 {% if member_list %}
     <ul>
-    {% for person in member_list %}
-         <li><a href={% url 'People:person_detail' person.name %}>{{ person.name }} FROM {{person.state}}</a></li>
+    {% for person, state in member_list %}
+         <li><a href={% url 'People:person_detail' person %}>{{ person }} FROM State: {{ state }}</a></li>
     {% endfor %}
     </ul>
 {% else %}

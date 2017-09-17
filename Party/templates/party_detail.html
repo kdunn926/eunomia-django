@@ -6,7 +6,9 @@
 
 <h1>Details of {{ party.0 }} ({{ party_abbreviation }})</h1>
 <ul>
-	<li><a href="{{party.1}}">Wikipedia Link</a></li>
+	{% if party.1 %}
+		<li><a href="{{ party.1 }}" target="_blank">Wikipedia Link</a></li>
+	{% endif %}
 	<li><a href={% url 'Party:party_members' party_abbreviation %}>Members of {{party.0}} Party</a></li>
 </ul>
 

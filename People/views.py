@@ -28,14 +28,15 @@ def index(request):
 	for item in people_list:
 		name = item['name'].encode('utf-8')
 		#url_name = re.sub('[^A-z]', '', item['name']).encode('utf-8')
-		if "^" in name:
-			name = name.replace("^", "")
+		name = name.replace("^", "").replace(":", "").replace("(", "").replace(")", "").replace("'", "")
+
 		state = item['state'].encode('utf-8')
 		party = item['party'].encode('utf-8')
 		person_tuple = (name, state, party)
 		person_list.append(person_tuple)
 
 	context = { 'person_list': person_list }
+	print person_list
 	return render(request, template_name, context)
 
 
@@ -113,6 +114,26 @@ def state_detail(request, state):
 	print "Input state info here"
 	return redirect(request.META['HTTP_REFERER'])
 
-def person_friends(request, friend):
-	print "Input friends info here"
-	return redirect(request.META['HTTP_REFERER'])
+def person_friends(request, name):
+	template_name = 'person_friends.html'
+
+	parties = Person().getParty(name)
+
+	profile = {}
+	profile['name'] = name
+
+	friends_list = []
+	for party in parties:
+		party_members = Party().getPartyMembers(party)
+		for member in party_members:
+			if member['name'] == name:
+				continue
+			friend = member['name'].replace("^", "").replace(":", "").replace("(", "").replace(")", "").replace("'", "")
+
+			friends_list.append(friend.encode('utf-8'))
+	profile['friends_list'] = friends_list
+	context = {'profile': profile}
+
+	return render(request, template_name, context)
+
+#	return redirect(request.META['HTTP_REFERER'])
