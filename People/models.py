@@ -11,7 +11,6 @@ class NodeHandle(models.Model):
         abstract = True
 
     def __unicode__(self):
-        print 'NodeHandle for node %d' % self.node()['id']
         return 'NodeHandle for node %d' % self.node()['id']
 
     def node(self):
@@ -33,3 +32,7 @@ class Person(NodeHandle):
     def getState(self, name):
         state = db.getState(name)
         return state
+
+    def getCampaignFinancers(self, name):
+        campaign_financers = db.getCampaignFinancers(name)
+        return campaign_financers

@@ -19,15 +19,12 @@ def index(request):
 	template_name = 'people_index.html'
 	context_object_name = 'people_list'
 
-	#person_class = Person()
-
 	people_list = Person().getAll()
 
 	person_list = []
 
 	for item in people_list:
 		name = item['name'].encode('utf-8')
-		#url_name = re.sub('[^A-z]', '', item['name']).encode('utf-8')
 		name = name.replace("^", "").replace(":", "").replace("(", "").replace(")", "").replace("'", "")
 
 		state = item['state'].encode('utf-8')
@@ -36,7 +33,7 @@ def index(request):
 		person_list.append(person_tuple)
 
 	context = { 'person_list': person_list }
-	print person_list
+
 	return render(request, template_name, context)
 
 
@@ -47,6 +44,29 @@ def person_detail(request, name):
 	parties = Person().getParty(name)
 	congress = Congress().getCongressSession(name)
 	state = Person().getState(name)
+
+	# Campaign finance data has name in the format of LASTNAME, FIRSTNAME MIDDLE
+	#  So re-arrange the given name here for future finance data request
+	split_name = name.split(" ")#, 1)[1].upper() + ", " + name.split(" ", 1)[0].upper()
+
+	if len(split_name) == 2:
+
+		campaign_name = name.split(" ", 1)[1].upper() + ", " + name.split(" ", 1)[0].upper()
+	elif len(split_name) == 3:
+
+		campaign_name = split_name[-1].upper() + ", " + split_name[0].upper()
+
+	campaign_financers = Person().getCampaignFinancers(campaign_name)
+
+	financers_list = []
+	for financer in campaign_financers:
+		contributor = financer[0]
+		amount = financer[1]
+		if contributor is None:
+			contributor = "Unknown"
+		financers_list.append((contributor, amount))
+
+	top_financers_list = financers_list[:10]
 
 	friends_list = []
 	for party in parties:
@@ -97,43 +117,87 @@ def person_detail(request, name):
 	party_list = list(set([party[0].encode('utf-8') for party in parties]))
 
 	profile['name'] = name
-	profile['sessions'] = congress_list
-	profile['party'] = party_list
-	profile['state'] = state_list
-	profile['monologues'] = monologue_list
+
+	if congress_list:
+		profile['sessions'] = congress_list
+	else:
+		profile['sessions'] = [0]
+
+	if party_list:
+		profile['party'] = party_list
+	else:
+		profile['party'] = ['Uknown']
+
+	if state_list:
+		profile['state'] = state_list
+	else:
+		profile['state'] = ['Uknown']
+
+	if monologue_list:
+		profile['monologues'] = monologue_list
+	else:
+		profile['monologues'] = []
+
+	if campaign_financers:
+		profile['financers'] = financers_list
+	else:
+		profile['financers'] = []
+
+	if top_financers_list:
+		profile['top_financers'] = top_financers_list
+	else:
+		profile['top_financers'] = []
+
 	profile['wiki_link'] = ''
 	profile['image'] = ''
 	profile['state_image'] = ''
-	profile['friends_list'] = friends_list
-	profile['random_friends'] = random_friends
+
+	if friends_list:
+		profile['friends_list'] = friends_list
+	else:
+		profile['friends_list'] = []
+
+	if random_friends:
+		profile['random_friends'] = random_friends
+	else:
+		profile['random_friends'] = []
 
 	context = {'profile': profile}
 	return render(request, template_name, context)
 
 def state_detail(request, state):
-	print "Input state info here"
+
 	return redirect(request.META['HTTP_REFERER'])
 
-def person_friends(request, name):
-	template_name = 'person_friends.html'
+def person_financers(request, name):
+	template_name = 'person_financers.html'
 
-	parties = Person().getParty(name)
+	# Reformat the name to be in LASTNAME, FIRSTNAME MIDDLE
+	split_name = name.split(" ")
+	if len(split_name) == 2:
+		campaign_name = name.split(" ", 1)[1].upper() + ", " + name.split(" ", 1)[0].upper()
+	elif len(split_name) == 3:
+		campaign_name = split_name[-1].upper() + ", " + split_name[0].upper() + split_name[1].upper()
+	else:
+		print "NEED TO DO SOMETHING HERE"
+		print split_name
+
+	campaign_financers = Person().getCampaignFinancers(campaign_name)
+
+	financers_list = []
+	for financer in campaign_financers:
+
+		contributor = financer[0]
+		amount = financer[1]
+		if contributor is None:
+			contributor = "Unknown"
+		financers_list.append((contributor, amount))
+	top_financers_list = financers_list[:10]
 
 	profile = {}
 	profile['name'] = name
+	profile['financers_list'] = financers_list
 
-	friends_list = []
-	for party in parties:
-		party_members = Party().getPartyMembers(party)
-		for member in party_members:
-			if member['name'] == name:
-				continue
-			friend = member['name'].replace("^", "").replace(":", "").replace("(", "").replace(")", "").replace("'", "")
-
-			friends_list.append(friend.encode('utf-8'))
-	profile['friends_list'] = friends_list
 	context = {'profile': profile}
 
 	return render(request, template_name, context)
-
-#	return redirect(request.META['HTTP_REFERER'])

@@ -12,7 +12,6 @@ class NodeHandle(models.Model):
         abstract = True
 
     def __unicode__(self):
-        print 'NodeHandle for node %d' % self.node()['id']
         return 'NodeHandle for node %d' % self.node()['id']
 
     def node(self):

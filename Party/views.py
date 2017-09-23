@@ -45,9 +45,10 @@ def party_detail(request, name):
 	'I then D': ('Independant THEN Democratic',''),
 	'D then R': ('Democratic THEN Republican',''),
 	'R then D': ('Republican THEN Democratic',''),
-	'UNKNOWN': ('UNKNOWN',''),
+	'UNKNOWN': ('Unknown',''),
 	'R then I': ('Republican THEN Independant',''),
-	'D then I': ('Democratic THEN Independant','')
+	'D then I': ('Democratic THEN Independant',''),
+	'Unknown': ('Unknown', '')
 	}
 
 	party = Party().getSingleByName(name)
@@ -80,7 +81,6 @@ def party_members(request, name):
 			}
 
 	members = Party().getPartyMembers(name)
-	#print members
 	for member in members:
 		clean_member = member['name'].replace("^", "").replace(":", "").replace("(", "").replace(")", "").replace("'", "")
 		member_tuple = (clean_member, member['state'])

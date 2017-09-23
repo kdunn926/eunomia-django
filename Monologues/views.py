@@ -27,11 +27,11 @@ def monologues_by_date(request, date):
 	house_monologues = []
 
 	for m in monologues:
+		m['speaker'] = m['speaker'].replace("^", "").replace(":", "").replace("(", "").replace(")", "").replace("'", "")
 		if m['branch'].lower() == 'house':
 			house_monologues.append(m)
 		elif m['branch'].lower() == 'senate':
 			senate_monologues.append(m)
-			#print m['text']
 		else:
 			print "I AM CONFUSED...."
 

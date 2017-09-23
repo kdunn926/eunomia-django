@@ -8,7 +8,7 @@ urlpatterns = [
 	url(r'^$', views.index, name='people_index'),
 
 	url(r'^(?P<name>([\w+\.?\s?\w+\.?]+))/$', views.person_detail, name='person_detail'),
-	url(r'^(?P<name>([\w+\.?\s?\w+\.?]+))/friends/$', views.person_friends, name='person_friends'),
+	url(r'^(?P<name>([\w+\.?\s?\w+\.?]+))/financers/$', views.person_financers, name='person_financers'),
 
 	url(r'^state/(?P<state>(\w+))/$', views.state_detail, name='state_detail'),
 

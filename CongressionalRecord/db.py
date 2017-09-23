@@ -3,15 +3,16 @@ from neo4j import connection
 from re import escape
 from django.conf import settings
 
+connection.http.REQUEST_TIMEOUT = 9999
 manager = contextmanager.Neo4jDBConnectionManager(settings.NEO4J_RESOURCE_URI,
                                                   settings.NEO4J_USERNAME,
                                                   settings.NEO4J_PASSWORD)
-
-
 def query(query, executor=''):
     try:
         with manager.read as r:
-            return r.execute(query).fetchall()
+            result = r.execute(query).fetchall()
+            r.connection.rollback()
+            return result
     except IndexError:
         return {}
 
@@ -20,6 +21,7 @@ def getNode(id, label):
     try:
         with manager.read as r:
             for n in r.execute(q, label=label, id=id).fetchone():
+                r.connection.rollback()
                 return n
     except IndexError:
         return {}
@@ -28,7 +30,8 @@ def getSingleNodeByLabel(label_string):
     q = 'MATCH (n:%s) RETURN n' % label_string
     try:
         with manager.read as r:
-            return r.execute(q, label=label_string)
+            result = r.execute(q, label=label_string)
+            return result
     except IndexError:
         return {}
 
@@ -46,7 +49,9 @@ def deleteNode(id, label):
 def getUniqueNode(label, key, value):
     q = 'MATCH (n:{l} { {k}: {value} }) RETURN n LIMIT 1'
     with manager.read as r:
-        return r.execute(q, l=label, k=key, value=value).fetchone()
+        result = r.execute(q, l=label, k=key, value=value).fetchone()
+        r.connection.rollback()
+        return result
 
 
 def wildcardSearch(search_string):
@@ -57,7 +62,9 @@ def wildcardSearch(search_string):
         RETURN movies, persons
         """
     with manager.read as r:
-        return r.execute(q, search_string=search_string).fetchone()
+        result = r.execute(q, search_string=search_string).fetchone()
+        r.connection.rollback()
+        return result
 
 def getPeople():
     q = """
@@ -65,12 +72,16 @@ def getPeople():
         RETURN p.name, p.state, p.party
         """
     with manager.read as r:
-        return [{'name': p[0], 'state': p[1], 'party': p[2]} for p in r.execute(q).fetchall()]
+        result = [{'name': p[0], 'state': p[1], 'party': p[2]} for p in r.execute(q).fetchall()]
+        r.connection.rollback()
+        return result
 
 def getState(name):
     q = 'MATCH (p:Person) WHERE p.name =~"%s" RETURN p.state' % (name)
     with manager.read as r:
-        return r.execute(q).fetchall()
+        result = r.execute(q).fetchall()
+        r.connection.rollback()
+        return result
 
 def getAllParties():
     q = """
@@ -78,17 +89,23 @@ def getAllParties():
         RETURN p
         """
     with manager.read as r:
-        return r.execute(q).fetchall()
+        result = r.execute(q).fetchall()
+        r.connection.rollback()
+        return result
 
 def getParty(name):
     q = 'MATCH (p:Person) WHERE p.name =~ "%s" RETURN p.party' % (name)
     with manager.read as r:
-        return r.execute(q).fetchall()
+        result = r.execute(q).fetchall()
+        r.connection.rollback()
+        return result
 
 def getPartyMembers(name):
     q = 'MATCH (n:Person) WHERE n.party = "%s" RETURN n.name, n.state' % (name)
     with manager.read as r:
-        return [{'name': n[0], 'state': n[1]} for n in r.execute(q).fetchall()]
+        result = [{'name': n[0], 'state': n[1]} for n in r.execute(q).fetchall()]
+        r.connection.rollback()
+        return result
 
 def getMonologueById(id):
     q = """
@@ -96,15 +113,22 @@ def getMonologueById(id):
         RETURN n """#, n.date, n.wordHistogram, n.properNouns, n.speaker, n.crongressionalYear, n.text, n.numWords, n.wordSet, n.branch, n.party
         #"""
     with manager.read as r:
-        return r.execute(q, id=id).fetchall()
+        monologue = r.execute(q, id=id).fetchall()
+        r.connection.rollback()
+        return monologue
 
 def getMonologueSpokenBy(name):
     q = """
         MATCH (n:Person {name: {name}})-[r:`SPOKE`]->(monologue)
+        WHERE NOT monologue.text STARTS WITH ' H.'
+        AND NOT monologue.text STARTS WITH '[[P' AND NOT monologue.text STARTS WITH ' [[P'
+        AND length(monologue.text) > 1
         RETURN monologue.text, monologue.id ORDER BY monologue.id DESC
         """
     with manager.read as r:
-        return r.execute(q, name=name).fetchall()
+        result = r.execute(q, name=name).fetchall()
+        r.connection.rollback()
+        return result
 
 def getMonologueID(name):
     q = """
@@ -112,18 +136,23 @@ def getMonologueID(name):
         RETURN monologue.id
         """
     with manager.read as r:
-        return r.execute(q, name=name).fetchall()
+        result = r.execute(q, name=name).fetchall()
+        r.connection.rollback()
+        return result
 
 def getCongressByName(name):
     q = " MATCH (n:Person)-[r:`SPOKE`]->(monologue) WHERE n.name =~'%s' RETURN monologue.congressionalYear" % (name)
     with manager.read as r:
-        return r.execute(q, name=name).fetchall()
-
+        result = r.execute(q, name=name).fetchall()
+        r.connection.rollback()
+        return result
 
 def getMonloguesByDate(year):
     q = """ MATCH (m:Monologue) WHERE m.date='%s' RETURN DISTINCT m ORDER BY m.date DESC""" % (year)
     with manager.read as r:
-        return r.execute(q).fetchall()
+        result = r.execute(q).fetchall()
+        r.connection.rollback()
+        return result
 
 def getDatesForCongressNumber(number):
     q = """
@@ -131,7 +160,9 @@ def getDatesForCongressNumber(number):
         RETURN DISTINCT m.date ORDER BY m.date DESC
       """
     with manager.read as r:
-        return r.execute(q, number="Congress "+number).fetchall()
+        result = r.execute(q, number="Congress "+number).fetchall()
+        r.connection.rollback()
+        return result
 
 def getProperNounMentions(mentioner):
     q = """
@@ -139,8 +170,9 @@ def getProperNounMentions(mentioner):
         RETURN p.phrase
         """
     with manager.read as r:
-        return r.execute(q, name=mentioner).fetchall()
-
+        result = r.execute(q, name=mentioner).fetchall()
+        r.connection.rollback()
+        return result
 
 def getMentionersOf(name):
     q = """
@@ -148,4 +180,18 @@ def getMentionersOf(name):
         RETURN person.name
         """
     with manager.read as r:
-        return r.execute(q, name=name).fetchall()
+        result = r.execute(q, name=name).fetchall()
+        r.connection.rollback()
+        return result
+
+def getCampaignFinancers(name):
+
+    q = '''
+        MATCH (:Committee)-[o:CONTRIBUTED_TO]-(to:Candidate {candidate_name: {name}})
+        RETURN distinct o.recipient_or_payee, o.transaction_amount
+        order by toFloat(o.transaction_amount) desc
+        '''
+    with manager.read as r:
+        result = r.execute(q, name=name).fetchall()
+        r.connection.rollback()
+        return result
