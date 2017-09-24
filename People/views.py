@@ -1,6 +1,5 @@
 # Create your views here.
 from django.shortcuts import render, redirect
-from django.views import generic
 
 from .models import Person
 from Congress.models import Congress
@@ -9,11 +8,6 @@ from Monologues.models import Monologue
 
 import re
 import random
-
-#class PeopleListView(generic.ListView):
-#    template_name = 'people_index.html'
-#    context_object_name = 'people_list'
-#    model = Person
 
 def index(request):
 	template_name = 'people_index.html'
@@ -47,14 +41,15 @@ def person_detail(request, name):
 
 	# Campaign finance data has name in the format of LASTNAME, FIRSTNAME MIDDLE
 	#  So re-arrange the given name here for future finance data request
-	split_name = name.split(" ")#, 1)[1].upper() + ", " + name.split(" ", 1)[0].upper()
+	split_name = name.replace(".", "").split(" ")#, 1)[1].upper() + ", " + name.split(" ", 1)[0].upper()
 
 	if len(split_name) == 2:
-
 		campaign_name = name.split(" ", 1)[1].upper() + ", " + name.split(" ", 1)[0].upper()
 	elif len(split_name) == 3:
-
 		campaign_name = split_name[-1].upper() + ", " + split_name[0].upper()
+	else:
+		print split_name
+		campaign_name = ""
 
 	campaign_financers = Person().getCampaignFinancers(campaign_name)
 
@@ -172,15 +167,17 @@ def state_detail(request, state):
 def person_financers(request, name):
 	template_name = 'person_financers.html'
 
-	# Reformat the name to be in LASTNAME, FIRSTNAME MIDDLE
-	split_name = name.split(" ")
+	# Campaign finance data has name in the format of LASTNAME, FIRSTNAME MIDDLE
+	#  So re-arrange the given name here for future finance data request
+	split_name = name.replace(".", "").split(" ")#, 1)[1].upper() + ", " + name.split(" ", 1)[0].upper()
+
 	if len(split_name) == 2:
 		campaign_name = name.split(" ", 1)[1].upper() + ", " + name.split(" ", 1)[0].upper()
 	elif len(split_name) == 3:
-		campaign_name = split_name[-1].upper() + ", " + split_name[0].upper() + split_name[1].upper()
+		campaign_name = split_name[-1].upper() + ", " + split_name[0].upper()
 	else:
-		print "NEED TO DO SOMETHING HERE"
 		print split_name
+		campaign_name = ""
 
 	campaign_financers = Person().getCampaignFinancers(campaign_name)
 
