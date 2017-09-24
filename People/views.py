@@ -69,7 +69,9 @@ def person_detail(request, name):
 		for member in party_members:
 			if member['name'] == name:
 				continue
-			friends_list.append(member['name'].encode('utf-8'))
+			clean_friend_name = member['name'].replace("^", "").replace(":", "").replace("(", "").replace(")", "").replace("'", "")
+
+			friends_list.append(clean_friend_name.encode('utf-8'))
 
 	random_friends = []
 	if len(friends_list) <= 6:

@@ -63,10 +63,12 @@
           <div class="col-md-5 col-sm-4">
            <form class="navbar-form">
               <div class="form-group" style="display:inline;">
-                <div class="input-group" style="display:table;">
-                  <input class="form-control" name="search" placeholder="Search..." autocomplete="off" type="text">
-                  <span class="input-group-addon" style="width:1%;">
-                    <span class="glyphicon glyphicon-search"></span>
+                <div class="input-group" style="display:table; ">
+                  <!-- <input class="form-control" name="search" placeholder="Search..." autocomplete="off" type="text"> -->
+                  <input class="form-control pull-right" name="search" placeholder="Search..." autocomplete="on" type="text" id="myInput" onkeyup="searchFunction()">
+
+                  <!-- <span class="input-group-addon" style="width:1%;"> -->
+                    <!-- <span class="glyphicon glyphicon-search"></span> -->
                   </span>
                 </div>
               </div>
@@ -96,5 +98,32 @@
           <!-- Copyright © Company - All rights reserved -->
       </div>
     </footer>
+
+    <script>
+    function searchFunction() {
+        // Declare variables
+        var input, filter, ul, li, a, i;
+        try {
+          input = document.getElementById('myInput');
+          filter = input.value.toUpperCase();
+          ul = document.getElementById("search_ul");
+          li = ul.getElementsByTagName('li');
+
+          // Loop through all list items, and hide those who don't match the search query
+          for (i = 0; i < li.length; i++) {
+              a = li[i].getElementsByTagName("a")[0];
+              if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                  li[i].style.display = "";
+              } else {
+                  li[i].style.display = "none";
+              }
+          }
+        }
+        catch(err) {
+
+        }
+    }
+    </script>
+
   </body>
 </html>

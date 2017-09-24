@@ -5,7 +5,7 @@
 </br>
 
 {% if person_list %}
-    <ul>
+    <ul id="search_ul">
     {% for name, state, party in person_list %}
          <li><a href={% url 'People:person_detail' name%}>{{ name }} (with party affiliation:{{ party }}) from State: {{ state }}</a></li>
     {% endfor %}
