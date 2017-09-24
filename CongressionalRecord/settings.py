@@ -142,7 +142,8 @@ INSTALLED_APPS = (
     'People',
     'Party',
     'Congress',
-    'Monologues'
+    'Monologues',
+    'Financers'
     #'neo4django.graph_auth'
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',

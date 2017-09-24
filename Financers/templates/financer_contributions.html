@@ -13,7 +13,7 @@
 	{% if profile.financers_list %}
 	    <ul>
 	    {% for financer in profile.financers_list %}
-	         <li class="list-group-item"><a href='{% url "Financers:financer_detail" financer.0 %}'>From {{ financer.0 }} in the amount of ${{ financer.1 }}</a></li>
+	         <li class="list-group-item">From {{ financer.0 }} in the amount of ${{ financer.1 }}</li>
 	    {% endfor %}
 	    </ul>
 	{% else %}

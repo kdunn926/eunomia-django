@@ -27,35 +27,20 @@ class NodeHandle(models.Model):
     def node(self):
         return db.get_node(self.id, self.__class__.__name__)
 
-class Congress(NodeHandle):
+class Financers(NodeHandle):
 
-    def getAll(self):
-        congress = db.getSingleNodeByLabel("Congress")
-        return congress
-
-    #def getSingle(self):
-    #    pass
-
-    def getCongressSession(self, name):
-    	query = " MATCH (n:Person)-[r:`SPOKE`]->(monologue) WHERE n.name =~'%s' RETURN monologue.congressionalYear" % (name)
+    def getFinanceDetails(self, name):
+    	query = '''MATCH (n:Contributor {name: {name}}) RETURN n'''
         with manager.read as r:
             result = r.execute(query, name=name).fetchall()
             r.connection.rollback()
             return result
 
-    def getDatesForCongressNumber(self, number):
-        query = """
-        MATCH (m:Monologue)-[r:`PART OF`]->(c:Congress {id:  'Congress %s'})
-        RETURN DISTINCT m.date ORDER BY m.date DESC
-        """ % number
+    def getFinancersContributions(self, name):
+    	query = '''MATCH (c:Committee {name: {name}})-[o:CONTRIBUTED_TO]-(to:Candidate)
+			RETURN distinct c.committee_name,to.candidate_name, toFloat(o.transaction_amount)
+			order by toFloat(o.transaction_amount) desc'''
         with manager.read as r:
-            tuple_dates = r.execute(query, number=number).fetchall()
+            result = r.execute(query, name=name).fetchall()
             r.connection.rollback()
-
-            # There is only 1 date returned for each tuple, so break apart tuple
-        dates = [date[0] for date in tuple_dates]
-        return dates
-        # tuple_dates = db.query(query)
-        # dates = [date[0] for date in tuple_dates]
-        # return dates
-
+            return result

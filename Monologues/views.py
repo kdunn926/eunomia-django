@@ -21,7 +21,13 @@ def monologues_by_date(request, date):
 
 	tuple_monologues = Monologue().getMonloguesByDate(date)
 	monologues = [m[0] for m in tuple_monologues]
-	congress_number = monologues[1]['congressionalYear']
+	try:
+		congress_number = monologues[1]['congressionalYear']
+	except IndexError:
+		congress_number = monologues[0]['congressionalYear']
+	finally:
+		congress_number = ''
+
 
 	senate_monologues = []
 	house_monologues = []

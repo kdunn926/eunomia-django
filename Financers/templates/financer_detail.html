@@ -1,0 +1,24 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+</br>
+
+{% if profile.name == 'Unknown' %}
+<div class="panel-heading">
+  <h1>Unfortunately, contributions are allowed to be anonymous in certain situations.</h1>
+  <h2>Read more about it here: <a target="_blank" href="https://www.nytimes.com/elections/2012/guide-to-political-donations.html?mcubz=0">NY Times arcticle</a></h2>
+  <h2>Here is a link to the Supreme Court ruling: <a target="_blank" href="https://www.supremecourt.gov/opinions/09pdf/08-205.pdf">Supreme Court Ruling</a></h2>
+  <h3>Sorry for any inconvenience this may cause you.</h3>
+  <h3>Feel free to call your local elected officials to complain</h3>
+  <h3>Here is a link to help you find them: <a target="_blank" href="https://www.govtrack.us/congress/members">Who represents me?</a></h3>
+</div>
+{% else %}
+<div class="panel-heading">
+	<div class="panel-title">Campaign Donations for {{ profile.name }}</div>
+
+</div>
+{% endif %}
+</br>
+
+{% endblock %}

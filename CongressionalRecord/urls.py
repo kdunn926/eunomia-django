@@ -13,6 +13,7 @@ urlpatterns = [
 	url(r'^Party/', include('Party.urls', namespace='Party')),
 	url(r'^Congress/', include('Congress.urls', namespace='Congress')),
 	url(r'^Monologues/', include('Monologues.urls', namespace='Monologues')),
+	url(r'^Financers/', include('Financers.urls', namespace='Financers')),
 
 	url(r'^$', TemplateView.as_view(template_name='html/landing_page.html')),
 	url(r'^about/$', TemplateView.as_view(template_name='html/about.html')),
