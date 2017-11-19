@@ -1,18 +1,48 @@
 {% extends "header.html" %}
 
+{% load staticfiles %}
+
 {% block content %}
 
+<script type="text/javascript" src="{% static 'js/jquery-bootpag/lib/jquery.bootpag.min.js' %}"></script>
 </br>
 
-{% if person_list %}
-    <ul id="search_ul">
-    {% for name, state, party in person_list %}
-         <li><a href={% url 'People:person_detail' name%}>{{ name }} (with party affiliation:{{ party }}) from State: {{ state }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No people are available.</p>
-{% endif %}
+<div id='content'>
+	{% if people %}
+		<ul id="search_ul">
+		{% for name, state, party in people %}
+			 <li><a href={% url 'People:person_detail' name%}>{{ name }} (with party affiliation:{{ party }}) from State: {{ state }}</a></li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		<p>No people are available.</p>
+	{% endif %}
+</div>
 
-
+<div id="page-selection">
+	<!-- auto populated from AJAX bootpag call -->
+</div>
+<script>
+	$(document).ready(function() {
+		// init bootpag
+		$('#page-selection').bootpag({
+			total: {{ people.paginator.num_pages }},
+			page: 1,
+			maxVisible: 7,
+			firstLastUse: true,
+			first: "First",
+			last: "Last",
+		}).on("page", function(event, num){
+			$.ajax({
+				type:"get",
+				async:true,
+				url:"?page=" + num,
+				success: function(data, status) {
+					new_content = data.split('ul id="search_ul">')[1].split("</ul>")[0];
+					document.getElementById("content").innerHTML = new_content;
+				}
+			});
+		});
+	});
+</script>
 {% endblock %}

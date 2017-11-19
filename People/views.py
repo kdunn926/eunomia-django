@@ -1,13 +1,15 @@
 # Create your views here.
+
+import re
+import random
+
 from django.shortcuts import render, redirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Person
 from Congress.models import Congress
 from Party.models import Party
 from Monologues.models import Monologue
-
-import re
-import random
 
 def index(request):
 	template_name = 'people_index.html'
@@ -25,8 +27,22 @@ def index(request):
 		party = item['party'].encode('utf-8')
 		person_tuple = (name, state, party)
 		person_list.append(person_tuple)
+		person_list.sort()
 
-	context = { 'person_list': person_list }
+	paginator = Paginator(person_list, 50)
+	page = request.GET.get('page')
+
+	try:
+		people = paginator.page(page)
+	except EmptyPage:
+		# If page is out of range (e.g. 9999), deliver first page of results.
+		people = paginator.page(1)
+	except PageNotAnInteger:
+		# If page is not an integer, deliver first page.
+		people = paginator.page(1)
+
+	context = {'person_list': person_list,
+	'people': people}
 
 	return render(request, template_name, context)
 

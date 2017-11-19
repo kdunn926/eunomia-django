@@ -30,17 +30,19 @@ class NodeHandle(models.Model):
 class Financers(NodeHandle):
 
     def getFinanceDetails(self, name):
-    	query = '''MATCH (n:Contributor {name: {name}}) RETURN n'''
+    	query = '''MATCH (n:Contributor)-[o:CONTRIBUTED_TO]-(to:Candidate name: {name}) RETURN distinct n.name, o.transaction_amount'''
         with manager.read as r:
             result = r.execute(query, name=name).fetchall()
             r.connection.rollback()
             return result
 
     def getFinancersContributions(self, name):
-    	query = '''MATCH (c:Committee {name: {name}})-[o:CONTRIBUTED_TO]-(to:Candidate)
-			RETURN distinct c.committee_name,to.candidate_name, toFloat(o.transaction_amount)
-			order by toFloat(o.transaction_amount) desc'''
+    	query = '''MATCH (c:Committee)-[o:CONTRIBUTED_TO]-(to:Candidate) WHERE c.committee_name =~ '%s'
+			RETURN distinct c.committee_name, to.candidate_name, toFloat(o.transaction_amount)
+			order by toFloat(o.transaction_amount) desc''' % (".*" + name + ".*")
+        print query
         with manager.read as r:
-            result = r.execute(query, name=name).fetchall()
+            result = r.execute(query).fetchall()
+            print result
             r.connection.rollback()
             return result

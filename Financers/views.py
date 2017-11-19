@@ -13,7 +13,7 @@ def financer_detail(request, name):
 	financer = ''
 	if name != "Unknown":
 		name = name.replace(',', '')
-		financer = Financers().getFinanceDetails(name)
+		financer = Financers().getFinancersContributions(name)
 	profile = {}
 	print financer
 	profile['name'] = name

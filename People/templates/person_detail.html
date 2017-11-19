@@ -6,6 +6,7 @@
 {% load staticfiles %}
 
 
+
 <!-- Timeline content -->
 <div class="container">
     <div class="col-md-22 hidden">
@@ -252,7 +253,7 @@
                     <div class="panel-body">
                       <ul class="list-group">
                         {% for financer in profile.top_financers %}
-                        <li class="list-group-item">From {{ financer.0 }} in the amount of ${{ financer.1 }}
+                         <li class="list-group-item"><a href='{% url "Financers:financer_detail" financer.0 %}'>From {{ financer.0 }} in the amount of ${{ financer.1 }}</a></li>
                           <!-- <div class="col-xs-3 col-sm-6 col-md-3">
                               <img src="{% static 'img/Likes/likes-5.png' %}" alt="Group" class="img-responsive img-circle">
                           </div> -->
@@ -279,7 +280,7 @@
                 {% for monologue_text, monologue_id, date in profile.monologues %}
                   <div class="panel panel-white post panel-shadow">
                     <div class="post-description">
-                        <p>{{monologue_text}}</p>
+                        <p class='full-text' id='{{monologue_id}}_div'>{{monologue_text}}</p><small><a id='{{monologue_id}}_short-text' style='cursor: pointer'>read more</small>
                     </div>
                     <div class='stats' style="text-align:center">
                       <a href="{% url 'Monologues:monologues_by_date' date %}" class="stat-item"> <i class="fa fa-calendar" style='padding-left:10%'></i>Said on {{ date }}</a>
@@ -312,10 +313,21 @@
                         </section>
 
                         <script>
+                        $('#{{monologue_id}}_short-text').click(function(){
+                            $('#{{monologue_id}}_short-text').toggleClass('read-less');
+                            $('#{{monologue_id}}_div').toggleClass('read-less');
+                            if($(this).text()=='read more') $(this).text('less');
+                            else  $(this).text('read more');
+                        });
+                        </script>
+
+                        <script>
                           $(document).ready(function(){
                             $("#{{monologue_id}}_details").on('click', function(){
                               $("#{{monologue_id}}_detail_modal").modal({show: true});
                             }); // show modal
+
+                            $(' .full-text').toggleClass('read-less');
                           });
                         </script>
 
@@ -401,5 +413,7 @@
     </div>
 
     </div>
+
+  </br>
 {% endblock %}
 

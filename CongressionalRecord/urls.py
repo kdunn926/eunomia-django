@@ -5,10 +5,9 @@ from django.conf.urls import include, url
 # admin.autodiscover()
 
 from django.views.generic import TemplateView
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 	url(r'^People/', include('People.urls', namespace='People')),
 	url(r'^Party/', include('Party.urls', namespace='Party')),
 	url(r'^Congress/', include('Congress.urls', namespace='Congress')),
@@ -24,4 +23,6 @@ urlpatterns = [
 
     # Uncomment the next line to enable the admin:
     #url(r'^admin/', include(admin.site.urls)),
+
+	url(r'^(?!People$|Party$|Congress$|Financers$|about$|contact$|developers$|privacy$|terms$).*', TemplateView.as_view(template_name='html/landing_page.html')),
 ]
